@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <radialGradient id="r1" cx="25%" cy="30%" r="60%">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="r2" cx="75%" cy="35%" r="55%">
+      <stop offset="0" stop-color="#d946ef" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#d946ef" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <rect width="1200" height="630" fill="url(#r1)"/>
+  <rect width="1200" height="630" fill="url(#r2)"/>
+
+  <g fill="#ffffff">
+    <rect x="96" y="92" width="86" height="86" rx="18" fill="#ffffff"/>
+    <text x="123" y="150" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="52" font-weight="700" fill="#0f172a">C</text>
+
+    <text x="200" y="150" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="48" font-weight="700">ClearSkeye</text>
+    <text x="96" y="250" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="64" font-weight="650">A world-class landing page</text>
+    <text x="96" y="318" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="32" font-weight="450" fill="#cbd5e1">Fast, accessible, and conversion-focused.</text>
+  </g>
+</svg>
+
