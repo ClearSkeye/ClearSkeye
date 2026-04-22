@@ -45,13 +45,15 @@ For showing “Latest from the blog” cards via `/api/ghost-posts`, set:
 
 Edit the core copy and URLs in [`src/content/site.ts`](src/content/site.ts). Update `public/sitemap.xml` and `public/robots.txt` with your real domain.
 
-## Living documentation
+## Documentation
 
-Detailed architecture and configuration docs live in [`living-docs/`](living-docs/):
+Comprehensive architecture and configuration documentation now lives in [`docs/`](docs/):
 
-- [`living-docs/README.md`](living-docs/README.md)
-- [`living-docs/architecture-overview.md`](living-docs/architecture-overview.md)
-- [`living-docs/frontend-architecture.md`](living-docs/frontend-architecture.md)
-- [`living-docs/backend-api-architecture.md`](living-docs/backend-api-architecture.md)
-- [`living-docs/configuration-reference.md`](living-docs/configuration-reference.md)
-- [`living-docs/deployment-and-operations.md`](living-docs/deployment-and-operations.md)
+- [`docs/README.md`](docs/README.md)
+- [`docs/architecture/system-overview.md`](docs/architecture/system-overview.md)
+- [`docs/architecture/frontend-architecture.md`](docs/architecture/frontend-architecture.md)
+- [`docs/architecture/backend-api-architecture.md`](docs/architecture/backend-api-architecture.md)
+- [`docs/configuration/configuration-reference.md`](docs/configuration/configuration-reference.md)
+- [`docs/configuration/environment-matrix.md`](docs/configuration/environment-matrix.md)
+- [`docs/operations/deployment-and-runbooks.md`](docs/operations/deployment-and-runbooks.md)
+- [`docs/reference/source-map.md`](docs/reference/source-map.md)
