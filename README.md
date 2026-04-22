@@ -44,3 +44,14 @@ For showing “Latest from the blog” cards via `/api/ghost-posts`, set:
 ## Customizing the site
 
 Edit the core copy and URLs in [`src/content/site.ts`](src/content/site.ts). Update `public/sitemap.xml` and `public/robots.txt` with your real domain.
+
+## Living documentation
+
+Detailed architecture and configuration docs live in [`living-docs/`](living-docs/):
+
+- [`living-docs/README.md`](living-docs/README.md)
+- [`living-docs/architecture-overview.md`](living-docs/architecture-overview.md)
+- [`living-docs/frontend-architecture.md`](living-docs/frontend-architecture.md)
+- [`living-docs/backend-api-architecture.md`](living-docs/backend-api-architecture.md)
+- [`living-docs/configuration-reference.md`](living-docs/configuration-reference.md)
+- [`living-docs/deployment-and-operations.md`](living-docs/deployment-and-operations.md)
