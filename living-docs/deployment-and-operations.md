@@ -20,15 +20,10 @@ Next.js dev server handles frontend rendering and route handlers under `/api/*`.
 
 Create a local env file (for example `.env.local`) with the variables you need:
 
-- Optional for frontend Ghost subscribe UX:
-  - `NEXT_PUBLIC_GHOST_URL`
 - Required if testing contact API in a serverless-compatible local runtime:
   - `RESEND_API_KEY`
   - `CONTACT_TO_EMAIL`
   - `CONTACT_FROM_EMAIL`
-- Required if testing latest posts server endpoint:
-  - `GHOST_URL`
-  - `GHOST_CONTENT_API_KEY`
 
 Never commit real secret values.
 
@@ -54,8 +49,6 @@ No custom rewrite config is required; Vercel auto-detects Next.js and handles ro
 ## Runtime Dependencies
 
 - **Resend:** Contact submission delivery.
-- **Ghost Content API:** Latest posts section.
-- **Ghost Portal script (`members.js`):** Newsletter modal/signup UX.
 - **Vercel Analytics + Speed Insights:** Frontend telemetry.
 
 ## Monitoring and Troubleshooting
@@ -73,36 +66,9 @@ Checks:
 3. Verify Resend key validity and sender domain verification.
 4. Confirm payload constraints (email format, max lengths).
 
-## Blog Posts Not Showing
-
-Symptoms:
-
-- "Latest from the blog" section absent.
-
-Checks:
-
-1. Verify `GHOST_URL` and `GHOST_CONTENT_API_KEY` are set.
-2. Confirm Ghost endpoint reachable and key has content API access.
-3. Inspect `/api/ghost-posts` response code:
-   - `204`: config missing/feature disabled.
-   - `502`: upstream Ghost request failed.
-   - `400`: validation/parsing issue.
-
-## Newsletter Subscribe Button Appears Inactive
-
-Symptoms:
-
-- Subscribe click does not open modal or redirect.
-
-Checks:
-
-1. Ensure `NEXT_PUBLIC_GHOST_URL` is present at build time.
-2. Confirm Ghost `members.js` loads in browser network panel.
-3. Verify the Ghost instance supports portal/members.
-
 ## Security and Compliance Notes
 
-- Keep API keys server-only (`process.env`, never `NEXT_PUBLIC_`).
+- Keep API keys server-only (`process.env`).
 - Rotate provider keys on suspicion of exposure.
 - Do not log full user message content unless explicitly required.
 - Honeypot field reduces basic automated spam traffic.

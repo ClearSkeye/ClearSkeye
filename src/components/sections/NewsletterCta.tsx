@@ -1,7 +1,6 @@
 import { site } from '../../content/site'
 import { Container } from '../layout/Container'
 import { Button } from '../ui/Button'
-import { openGhostPortal } from '../../lib/ghost'
 
 export function NewsletterCta() {
   return (
@@ -13,18 +12,16 @@ export function NewsletterCta() {
               Get high-signal updates.
             </h2>
             <p className="mt-3 max-w-xl text-pretty text-sm leading-6 text-white/80">
-              Product notes, patterns, and launch lessons. Powered by Ghost so
-              your subscriber list lives in one place.
+              Product notes, patterns, and launch lessons. Follow along for
+              updates as new work ships.
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-            <Button
-              variant="secondary"
-              className="ring-0"
-              onClick={() => openGhostPortal()}
-            >
-              Subscribe
-            </Button>
+            <a href="#contact">
+              <Button variant="secondary" className="ring-0">
+                Join the list
+              </Button>
+            </a>
             <a
               href={site.socials.github}
               target="_blank"
@@ -35,10 +32,6 @@ export function NewsletterCta() {
             </a>
           </div>
         </div>
-        <p className="mt-4 text-xs text-slate-500">
-          If Ghost Portal isn’t configured yet, the Subscribe button will do
-          nothing until you add your Ghost URL.
-        </p>
       </Container>
     </section>
   )

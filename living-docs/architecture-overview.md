@@ -2,10 +2,9 @@
 
 ## System Summary
 
-ClearSkeye is a Next.js (App Router) application deployed on Vercel. It exposes two route-handler API routes:
+ClearSkeye is a Next.js (App Router) application deployed on Vercel. It exposes one route-handler API route:
 
 - `POST /api/contact` for contact form delivery via Resend.
-- `GET /api/ghost-posts` for fetching latest Ghost blog posts.
 
 The frontend and API routes are in the same repository and deployed as one Vercel project.
 
@@ -14,12 +13,10 @@ The frontend and API routes are in the same repository and deployed as one Verce
 1. **Client UI (`app/` + `src/`)**
    - Renders landing page sections and interactions.
    - Submits contact form data to `/api/contact`.
-   - Fetches optional blog previews from `/api/ghost-posts`.
-   - Injects optional Ghost Portal script for newsletter signup.
 
 2. **Route handlers (`app/api/`)**
    - Validates and sanitizes incoming request payloads with Zod.
-   - Integrates with external providers (Resend, Ghost Content API).
+   - Integrates with external providers (Resend).
    - Returns explicit HTTP status codes for UI and operational diagnostics.
 
 3. **Configuration + Build Tooling**
@@ -35,8 +32,6 @@ The frontend and API routes are in the same repository and deployed as one Verce
 2. Next.js renders the root route from `app/page.tsx`.
 3. Shared layout/metadata are provided by `app/layout.tsx`.
 4. App renders section components and page metadata.
-5. Optional Ghost Portal script is injected when `NEXT_PUBLIC_GHOST_URL` exists.
-
 ## 2) Contact Submission Flow
 
 1. User fills form in `Contact` component.
@@ -46,20 +41,12 @@ The frontend and API routes are in the same repository and deployed as one Verce
 5. If valid and not caught by honeypot, API sends email via Resend.
 6. API returns `{ ok: true }`, UI shows success state.
 
-## 3) Latest Posts Flow
-
-1. `LatestPosts` loads and calls `fetch('/api/ghost-posts')`.
-2. API checks required env vars (`GHOST_URL`, `GHOST_CONTENT_API_KEY`).
-3. API requests Ghost Content API and maps strict response schema.
-4. If successful, UI renders 3 post cards.
-5. If unavailable/missing config, UI hides section by rendering `null`.
-
 ## Deployment Topology
 
 - **Hosting:** Vercel.
 - **Frontend runtime:** Next.js app routes and layout.
 - **API runtime:** Next.js route handlers under `app/api/*`.
-- **Third-party services:** Resend (transactional email), Ghost (content + portal UI).
+- **Third-party services:** Resend (transactional email).
 
 ## Source Tree Map
 
@@ -69,7 +56,6 @@ The frontend and API routes are in the same repository and deployed as one Verce
 - `src/lib/` - client-side API helpers and shared utility logic.
 - `src/content/site.ts` - central content + URL configuration object.
 - `app/api/contact/route.ts` - contact endpoint.
-- `app/api/ghost-posts/route.ts` - Ghost latest posts endpoint.
 - `public/` - static assets (favicon, og image, robots, sitemap).
 
 ## Architectural Constraints

@@ -1,12 +1,10 @@
 'use client'
 
 import { site } from '../src/content/site'
-import { GhostPortalScript } from '../src/components/GhostPortalScript'
 import { Container } from '../src/components/layout/Container'
 import { Nav } from '../src/components/sections/Nav'
 import { Hero } from '../src/components/sections/Hero'
 import { SocialProof } from '../src/components/sections/SocialProof'
-import { LatestPosts } from '../src/components/sections/LatestPosts'
 import { ValueProps } from '../src/components/sections/ValueProps'
 import { Quote } from '../src/components/sections/Quote'
 import { NewsletterCta } from '../src/components/sections/NewsletterCta'
@@ -18,8 +16,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-dvh bg-white text-slate-950 antialiased selection:bg-indigo-500/20 selection:text-slate-950">
-      <GhostPortalScript />
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -53,7 +49,6 @@ export default function HomePage() {
 
         <Container>
           <SocialProof />
-          <LatestPosts />
           <ValueProps />
           <Quote />
         </Container>

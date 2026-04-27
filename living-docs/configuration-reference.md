@@ -2,20 +2,6 @@
 
 ## Environment Variables
 
-## Client-Exposed (Next.js)
-
-These are read from `process.env.NEXT_PUBLIC_*` and may be embedded into frontend bundles.
-
-### `NEXT_PUBLIC_GHOST_URL`
-
-- **Required:** Optional
-- **Used by:**
-  - `src/components/GhostPortalScript.tsx`
-  - `src/lib/ghost.ts`
-- **Purpose:** Base URL of Ghost instance for newsletter portal integration.
-- **Example:** `https://blog.yourdomain.com`
-- **Behavior when missing:** Ghost script is not injected; subscribe fallback redirect is disabled.
-
 ## Server-Only (Next.js Route Handlers)
 
 These are read from `process.env` in `app/api/**/route.ts` and must never be exposed client-side.
@@ -39,18 +25,6 @@ These are read from `process.env` in `app/api/**/route.ts` and must never be exp
 - **Format example:** `ClearSkeye <hello@yourdomain.com>`
 - **Failure mode when missing:** `/api/contact` returns `500`.
 
-### `GHOST_URL`
-
-- **Required for:** `/api/ghost-posts`
-- **Purpose:** Ghost site URL for Content API requests.
-- **Failure mode when missing:** `/api/ghost-posts` returns `204` (section disabled path).
-
-### `GHOST_CONTENT_API_KEY`
-
-- **Required for:** `/api/ghost-posts`
-- **Purpose:** Ghost Content API key.
-- **Failure mode when missing:** `/api/ghost-posts` returns `204`.
-
 ## Application Content Configuration
 
 ## File: `src/content/site.ts`
@@ -72,9 +46,9 @@ Primary runtime content and branding object:
 - `dev`: `next dev`
 - `build`: `next build`
 - `start`: `next start`
-- `lint`: `next lint`
+- `lint`: `eslint .`
 - `format`: `prettier -w .`
-- `check`: `next lint && next build`
+- `check`: `eslint . && next build`
 
 Dependencies include Next.js 16, React 19, Tailwind 4, Zod, Resend, and Vercel telemetry packages.
 

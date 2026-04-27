@@ -30,17 +30,6 @@ npm run start
 - `CONTACT_TO_EMAIL`: Where contact emails should go (your inbox).
 - `CONTACT_FROM_EMAIL`: Verified sender in Resend (e.g. `ClearSkeye <hello@yourdomain.com>`).
 
-#### Ghost (optional)
-
-For Ghost Portal (newsletter), set this in Vercel (or locally in `.env.local`):
-
-- `NEXT_PUBLIC_GHOST_URL`: Your Ghost site URL (e.g. `https://blog.yourdomain.com`).
-
-For showing “Latest from the blog” cards via `/api/ghost-posts`, set:
-
-- `GHOST_URL`: Your Ghost site URL (same value as above, but server-side).
-- `GHOST_CONTENT_API_KEY`: Ghost Content API key.
-
 ## Customizing the site
 
 Edit the core copy and URLs in [`src/content/site.ts`](src/content/site.ts). Update `public/sitemap.xml` and `public/robots.txt` with your real domain.

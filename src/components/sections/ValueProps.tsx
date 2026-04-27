@@ -13,7 +13,7 @@ const features = [
   },
   {
     title: 'Ready for growth',
-    body: 'Ghost integration, analytics, and a clean structure for iterating quickly.',
+    body: 'Built-in analytics and a clean structure for iterating quickly.',
   },
 ] as const
 

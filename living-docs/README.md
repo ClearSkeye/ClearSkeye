@@ -28,6 +28,6 @@ Treat these docs as part of the feature surface area:
 
 ## Scope Notes
 
-- This project currently has a single frontend app and two serverless API endpoints.
+- This project currently has a single frontend app and one serverless API endpoint.
 - No database, background queue, or dedicated backend service currently exists.
-- Ghost and Resend are external dependencies used at runtime through public HTTP APIs.
+- Resend is the external dependency used at runtime through public HTTP APIs.
