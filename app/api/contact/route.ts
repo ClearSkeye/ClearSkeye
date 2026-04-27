@@ -1,6 +1,5 @@
 import { Resend } from 'resend'
 import { z } from 'zod'
-import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 const ContactSchema = z.object({
   name: z.string().min(1).max(120),
@@ -17,22 +16,12 @@ function readEnv(name: string) {
   return value
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'POST') {
-    res.statusCode = 405
-    res.setHeader('Allow', 'POST')
-    res.end('Method Not Allowed')
-    return
-  }
-
+export async function POST(req: Request) {
   try {
-    const body = ContactSchema.parse(req.body ?? {})
+    const body = ContactSchema.parse(await req.json())
 
     if (body.honeypot) {
-      res.statusCode = 200
-      res.setHeader('content-type', 'application/json')
-      res.end(JSON.stringify({ ok: true }))
-      return
+      return Response.json({ ok: true })
     }
 
     const resend = new Resend(readEnv('RESEND_API_KEY'))
@@ -59,15 +48,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       text,
     })
 
-    res.statusCode = 200
-    res.setHeader('content-type', 'application/json')
-    res.end(JSON.stringify({ ok: true }))
+    return Response.json({ ok: true })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Bad Request'
-    const statusCode = message.startsWith('Missing environment variable') ? 500 : 400
-    res.statusCode = statusCode
-    res.setHeader('content-type', 'text/plain; charset=utf-8')
-    res.end(message)
+    const status = message.startsWith('Missing environment variable') ? 500 : 400
+    return new Response(message, {
+      status,
+      headers: { 'content-type': 'text/plain; charset=utf-8' },
+    })
   }
 }
 
+export async function GET() {
+  return new Response('Method Not Allowed', {
+    status: 405,
+    headers: { Allow: 'POST' },
+  })
+}

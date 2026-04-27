@@ -1,6 +1,6 @@
 # ClearSkeye
 
-A minimal, high-conversion landing page built with React + Vite and deployable on Vercel.
+A minimal, high-conversion landing page built with Next.js (App Router) and deployable on Vercel.
 
 ## Local development
 
@@ -13,7 +13,7 @@ npm run dev
 
 ```bash
 npm run build
-npm run preview
+npm run start
 ```
 
 ## Vercel deployment
@@ -34,7 +34,7 @@ npm run preview
 
 For Ghost Portal (newsletter), set this in Vercel (or locally in `.env.local`):
 
-- `VITE_GHOST_URL`: Your Ghost site URL (e.g. `https://blog.yourdomain.com`).
+- `NEXT_PUBLIC_GHOST_URL`: Your Ghost site URL (e.g. `https://blog.yourdomain.com`).
 
 For showing “Latest from the blog” cards via `/api/ghost-posts`, set:
 

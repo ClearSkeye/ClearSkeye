@@ -2,20 +2,20 @@
 
 ## Entry and Providers
 
-`src/main.tsx` initializes the app with:
+`app/layout.tsx` initializes the app shell with:
 
-- `StrictMode` for React development diagnostics.
-- `HelmetProvider` to support SEO metadata management.
+- Next.js root HTML/body layout.
+- Metadata via exported `metadata`.
 - `Analytics` and `SpeedInsights` from Vercel for telemetry.
 
-Global styling is loaded from `src/index.css`, which imports Tailwind v4 and sets base `html/body` layout defaults.
+Global styling is loaded from `app/globals.css`, which imports Tailwind v4 and sets base `html/body` layout defaults.
 
 ## App Composition
 
-`src/App.tsx` composes the page in this order:
+`app/page.tsx` composes the page in this order:
 
-1. `PageSeo` (title/meta/OG/Twitter/JSON-LD tags)
-2. `GhostPortalScript` (optional script injection)
+1. `GhostPortalScript` (optional script injection)
+2. JSON-LD organization schema script
 3. Skip-to-content accessibility link
 4. `Nav`
 5. Main content:
@@ -56,7 +56,7 @@ These primitives enforce consistent spacing and interaction affordances across t
   - "Get a demo" button smooth-scrolls to `#contact`.
 - **Hero**
   - Uses `motion/react` for staged entrance animation on text/cards.
-  - Receives CTA callbacks from `App` to scroll to contact/newsletter.
+  - Receives CTA callbacks from `page.tsx` to scroll to contact/newsletter.
 - **SocialProof**
   - Placeholder logo grid designed to be replaced with real logos/mentions.
 - **LatestPosts**
@@ -84,7 +84,7 @@ These primitives enforce consistent spacing and interaction affordances across t
 ### Ghost helper (`src/lib/ghost.ts`)
 
 - Opens `window.Portal` if Ghost script initialized.
-- Otherwise reads `VITE_GHOST_URL` and redirects browser to `/#/portal/signup` path.
+- Otherwise reads `NEXT_PUBLIC_GHOST_URL` and redirects browser to `/#/portal/signup` path.
 
 ### Ghost posts API client (`src/lib/ghostPosts.ts`)
 
@@ -94,15 +94,9 @@ These primitives enforce consistent spacing and interaction affordances across t
 
 ## SEO + Metadata
 
-`PageSeo` sets:
-
-- Document language
-- Title + description
-- Canonical URL
-- Open Graph and Twitter card tags
-- Minimal JSON-LD organization schema
-
-Metadata values are derived from `site` content + `canonicalUrl`.
+- Metadata is defined in `app/layout.tsx`.
+- JSON-LD organization schema is rendered in `app/page.tsx`.
+- Values are derived from `site` content + canonical URL.
 
 ## Accessibility and UX Notes
 

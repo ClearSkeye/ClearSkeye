@@ -2,11 +2,11 @@
 
 ## Environment Variables
 
-## Client-Exposed (Vite)
+## Client-Exposed (Next.js)
 
-These are read from `import.meta.env` and may be embedded into frontend bundles.
+These are read from `process.env.NEXT_PUBLIC_*` and may be embedded into frontend bundles.
 
-### `VITE_GHOST_URL`
+### `NEXT_PUBLIC_GHOST_URL`
 
 - **Required:** Optional
 - **Used by:**
@@ -16,9 +16,9 @@ These are read from `import.meta.env` and may be embedded into frontend bundles.
 - **Example:** `https://blog.yourdomain.com`
 - **Behavior when missing:** Ghost script is not injected; subscribe fallback redirect is disabled.
 
-## Server-Only (Vercel Functions)
+## Server-Only (Next.js Route Handlers)
 
-These are read from `process.env` in `api/*.ts` and must never be exposed client-side.
+These are read from `process.env` in `app/api/**/route.ts` and must never be exposed client-side.
 
 ### `RESEND_API_KEY`
 
@@ -69,61 +69,38 @@ Primary runtime content and branding object:
 
 ## `package.json`
 
-- `dev`: `vite`
-- `build`: `tsc -b && vite build`
-- `lint`: `eslint .`
+- `dev`: `next dev`
+- `build`: `next build`
+- `start`: `next start`
+- `lint`: `next lint`
 - `format`: `prettier -w .`
-- `preview`: `vite preview`
+- `check`: `next lint && next build`
 
-Dependencies include React 19, Vite 8, Tailwind 4, Zod, Resend, and Vercel telemetry packages.
+Dependencies include Next.js 16, React 19, Tailwind 4, Zod, Resend, and Vercel telemetry packages.
 
-## `vite.config.ts`
+## `postcss.config.mjs`
 
-- Plugins:
-  - `@vitejs/plugin-react-swc`
-  - `@tailwindcss/vite`
-- No custom aliases or env transforms defined.
+- Uses `@tailwindcss/postcss` for Tailwind v4 integration with Next.js.
 
 ## `tailwind.config.ts`
 
 - Content scan paths:
-  - `./index.html`
+  - `./app/**/*.{ts,tsx}`
   - `./src/**/*.{ts,tsx}`
 - Empty `theme.extend` and plugin arrays currently.
 
-## TypeScript Project Config
+## TypeScript Config (`tsconfig.json`)
 
-### `tsconfig.json`
-
-- Uses project references:
-  - `tsconfig.app.json`
-  - `tsconfig.node.json`
-
-### `tsconfig.app.json`
-
-- DOM + ES2023 libs.
-- JSX with `react-jsx`.
-- `moduleResolution: bundler`.
-- Strict-ish linting flags for unused locals/params and switch fallthrough.
-
-### `tsconfig.node.json`
-
-- Node-focused config for Vite config typing.
-- Similar bundler mode + lint flags.
-- Includes `vite.config.ts`.
+- Standard Next.js compiler options with `noEmit`.
+- Includes Next type plugin (`plugins: [{ name: 'next' }]`).
+- Includes generated Next types from `.next/types/**/*.ts`.
 
 ## Lint + Formatting
 
-## `eslint.config.js`
+## `eslint.config.mjs`
 
 - Flat config style.
-- Applies to `**/*.{ts,tsx}`.
-- Uses:
-  - `@eslint/js` recommended
-  - `typescript-eslint` recommended
-  - `react-hooks` recommended
-  - `react-refresh` Vite config
-  - `eslint-config-prettier`
+- Uses `eslint-config-next/core-web-vitals`.
 
 ## `.prettierignore`
 
@@ -131,11 +108,7 @@ Dependencies include React 19, Vite 8, Tailwind 4, Zod, Resend, and Vercel telem
 
 ## Hosting and Routing Configuration
 
-## `vercel.json`
-
-- Rewrite all paths to `/index.html`:
-  - Enables SPA navigation fallback for client-side in-page/deep links.
-  - API routes still resolve via Vercel function routing under `/api/*`.
+- No `vercel.json` rewrite needed; Next.js routing and API handlers are native.
 
 ## Static/Public Config Files
 
@@ -151,4 +124,4 @@ When adding any new environment variable or config file:
 1. Add to this document with purpose, owner, and failure behavior.
 2. Add to deployment provider secrets/settings.
 3. Document local development setup if needed.
-4. Validate that no server-only secret is referenced through `VITE_` prefixed vars.
+4. Validate that no server-only secret is referenced through `NEXT_PUBLIC_` prefixed vars.

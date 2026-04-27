@@ -5,7 +5,7 @@ function normalizeUrl(url: string) {
 }
 
 export function GhostPortalScript() {
-  const ghostUrl = import.meta.env.VITE_GHOST_URL as string | undefined
+  const ghostUrl = process.env.NEXT_PUBLIC_GHOST_URL
 
   useEffect(() => {
     if (!ghostUrl) return

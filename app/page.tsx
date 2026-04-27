@@ -1,24 +1,36 @@
-import { site } from './content/site'
-import { PageSeo } from './components/PageSeo'
-import { GhostPortalScript } from './components/GhostPortalScript'
-import { Container } from './components/layout/Container'
-import { Nav } from './components/sections/Nav'
-import { Hero } from './components/sections/Hero'
-import { SocialProof } from './components/sections/SocialProof'
-import { LatestPosts } from './components/sections/LatestPosts'
-import { ValueProps } from './components/sections/ValueProps'
-import { Quote } from './components/sections/Quote'
-import { NewsletterCta } from './components/sections/NewsletterCta'
-import { Contact } from './components/sections/Contact'
-import { Footer } from './components/sections/Footer'
+'use client'
 
-function App() {
+import { site } from '../src/content/site'
+import { GhostPortalScript } from '../src/components/GhostPortalScript'
+import { Container } from '../src/components/layout/Container'
+import { Nav } from '../src/components/sections/Nav'
+import { Hero } from '../src/components/sections/Hero'
+import { SocialProof } from '../src/components/sections/SocialProof'
+import { LatestPosts } from '../src/components/sections/LatestPosts'
+import { ValueProps } from '../src/components/sections/ValueProps'
+import { Quote } from '../src/components/sections/Quote'
+import { NewsletterCta } from '../src/components/sections/NewsletterCta'
+import { Contact } from '../src/components/sections/Contact'
+import { Footer } from '../src/components/sections/Footer'
+
+export default function HomePage() {
   const canonicalUrl = site.url
 
   return (
     <div className="min-h-dvh bg-white text-slate-950 antialiased selection:bg-indigo-500/20 selection:text-slate-950">
-      <PageSeo canonicalUrl={canonicalUrl} />
       <GhostPortalScript />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: site.name,
+            url: canonicalUrl,
+          }),
+        }}
+      />
 
       <a
         href="#main"
@@ -57,5 +69,3 @@ function App() {
     </div>
   )
 }
-
-export default App

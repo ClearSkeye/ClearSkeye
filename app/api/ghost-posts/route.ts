@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 function readEnv(name: string) {
   const value = process.env[name]
@@ -21,14 +20,7 @@ const GhostPostsResponseSchema = z.object({
     .default([]),
 })
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'GET') {
-    res.statusCode = 405
-    res.setHeader('Allow', 'GET')
-    res.end('Method Not Allowed')
-    return
-  }
-
+export async function GET() {
   try {
     const ghostUrl = readEnv('GHOST_URL').replace(/\/+$/, '')
     const key = readEnv('GHOST_CONTENT_API_KEY')
@@ -41,21 +33,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const r = await fetch(url, { headers: { accept: 'application/json' } })
     if (!r.ok) {
-      res.statusCode = 502
-      res.setHeader('content-type', 'text/plain; charset=utf-8')
-      res.end(`Ghost request failed (${r.status})`)
-      return
+      return new Response(`Ghost request failed (${r.status})`, {
+        status: 502,
+        headers: { 'content-type': 'text/plain; charset=utf-8' },
+      })
     }
 
     const json = GhostPostsResponseSchema.parse(await r.json())
-    res.statusCode = 200
-    res.setHeader('content-type', 'application/json')
-    res.end(JSON.stringify({ posts: json.posts }))
+    return Response.json({ posts: json.posts })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Bad Request'
-    res.statusCode = message.startsWith('Missing environment variable') ? 204 : 400
-    res.setHeader('content-type', 'text/plain; charset=utf-8')
-    res.end(message)
+    const status = message.startsWith('Missing environment variable') ? 204 : 400
+    return new Response(message, {
+      status,
+      headers: { 'content-type': 'text/plain; charset=utf-8' },
+    })
   }
 }
 
+export async function POST() {
+  return new Response('Method Not Allowed', {
+    status: 405,
+    headers: { Allow: 'GET' },
+  })
+}

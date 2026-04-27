@@ -12,7 +12,7 @@ export function openGhostPortal() {
     return
   }
 
-  const ghostUrl = (import.meta.env.VITE_GHOST_URL as string | undefined)
+  const ghostUrl = process.env.NEXT_PUBLIC_GHOST_URL
     ?.replace(/\/+$/, '')
     ?.trim()
 

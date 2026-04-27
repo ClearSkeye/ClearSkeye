@@ -2,7 +2,7 @@
 
 ## System Summary
 
-ClearSkeye is a Vite-built React single-page application (SPA) deployed on Vercel. The application serves static frontend assets and exposes two serverless API routes:
+ClearSkeye is a Next.js (App Router) application deployed on Vercel. It exposes two route-handler API routes:
 
 - `POST /api/contact` for contact form delivery via Resend.
 - `GET /api/ghost-posts` for fetching latest Ghost blog posts.
@@ -11,31 +11,31 @@ The frontend and API routes are in the same repository and deployed as one Verce
 
 ## High-Level Components
 
-1. **Client SPA (`src/`)**
+1. **Client UI (`app/` + `src/`)**
    - Renders landing page sections and interactions.
    - Submits contact form data to `/api/contact`.
    - Fetches optional blog previews from `/api/ghost-posts`.
    - Injects optional Ghost Portal script for newsletter signup.
 
-2. **Serverless API (`api/`)**
+2. **Route handlers (`app/api/`)**
    - Validates and sanitizes incoming request payloads with Zod.
    - Integrates with external providers (Resend, Ghost Content API).
    - Returns explicit HTTP status codes for UI and operational diagnostics.
 
 3. **Configuration + Build Tooling**
-   - Vite + React SWC plugin for frontend bundling.
-   - TypeScript project references for app and node config contexts.
-   - Vercel rewrite for SPA deep-link handling.
+   - Next.js build/runtime pipeline.
+   - Tailwind v4 through PostCSS.
+   - Native Next.js routing (no SPA rewrite config).
 
 ## Runtime Data Flow
 
 ## 1) Initial Page Load
 
 1. Browser requests root URL.
-2. Vercel serves `index.html`.
-3. Vite-built JS bundle mounts React app via `src/main.tsx`.
+2. Next.js renders the root route from `app/page.tsx`.
+3. Shared layout/metadata are provided by `app/layout.tsx`.
 4. App renders section components and page metadata.
-5. Optional Ghost Portal script is injected when `VITE_GHOST_URL` exists.
+5. Optional Ghost Portal script is injected when `NEXT_PUBLIC_GHOST_URL` exists.
 
 ## 2) Contact Submission Flow
 
@@ -57,25 +57,24 @@ The frontend and API routes are in the same repository and deployed as one Verce
 ## Deployment Topology
 
 - **Hosting:** Vercel.
-- **Static assets:** Built frontend from Vite output.
-- **API runtime:** Vercel Node serverless functions for `api/*.ts`.
+- **Frontend runtime:** Next.js app routes and layout.
+- **API runtime:** Next.js route handlers under `app/api/*`.
 - **Third-party services:** Resend (transactional email), Ghost (content + portal UI).
 
 ## Source Tree Map
 
-- `src/main.tsx` - React bootstrapping and providers.
-- `src/App.tsx` - page composition and section ordering.
+- `app/layout.tsx` - metadata and global providers.
+- `app/page.tsx` - page composition and section ordering.
 - `src/components/` - layout, UI primitives, page sections, SEO/script helpers.
 - `src/lib/` - client-side API helpers and shared utility logic.
 - `src/content/site.ts` - central content + URL configuration object.
-- `api/contact.ts` - contact endpoint.
-- `api/ghost-posts.ts` - Ghost latest posts endpoint.
+- `app/api/contact/route.ts` - contact endpoint.
+- `app/api/ghost-posts/route.ts` - Ghost latest posts endpoint.
 - `public/` - static assets (favicon, og image, robots, sitemap).
-- `vercel.json` - SPA rewrite behavior.
 
 ## Architectural Constraints
 
-- Frontend is a single route SPA; there is no client-side route table yet.
+- Frontend currently uses a single landing route; there is no multi-page route tree yet.
 - Server logic is function-based; no shared backend framework layer currently exists.
 - No persistent storage; all server-side actions proxy to external services.
 - Validation is duplicated by design (client and server) to protect API boundaries.

@@ -14,14 +14,14 @@ npm install
 npm run dev
 ```
 
-Vite dev server handles frontend rendering. API routes are primarily designed for Vercel runtime; local API behavior depends on your local Vercel/dev strategy.
+Next.js dev server handles frontend rendering and route handlers under `/api/*`.
 
 ## Local Env Setup
 
 Create a local env file (for example `.env.local`) with the variables you need:
 
 - Optional for frontend Ghost subscribe UX:
-  - `VITE_GHOST_URL`
+  - `NEXT_PUBLIC_GHOST_URL`
 - Required if testing contact API in a serverless-compatible local runtime:
   - `RESEND_API_KEY`
   - `CONTACT_TO_EMAIL`
@@ -32,17 +32,16 @@ Create a local env file (for example `.env.local`) with the variables you need:
 
 Never commit real secret values.
 
-## Build and Preview
+## Build and Run
 
 ```bash
 npm run build
-npm run preview
+npm run start
 ```
 
 Build pipeline:
 
-1. TypeScript project build check (`tsc -b`)
-2. Vite production bundle generation
+1. Next.js production build (`next build`)
 
 ## Deployment Model (Vercel)
 
@@ -50,7 +49,7 @@ Build pipeline:
 2. Configure environment variables per target environment (Preview/Production).
 3. Deploy.
 
-`vercel.json` rewrites all non-API paths to `index.html` so the SPA always boots correctly.
+No custom rewrite config is required; Vercel auto-detects Next.js and handles routing.
 
 ## Runtime Dependencies
 
@@ -97,13 +96,13 @@ Symptoms:
 
 Checks:
 
-1. Ensure `VITE_GHOST_URL` is present at build time.
+1. Ensure `NEXT_PUBLIC_GHOST_URL` is present at build time.
 2. Confirm Ghost `members.js` loads in browser network panel.
 3. Verify the Ghost instance supports portal/members.
 
 ## Security and Compliance Notes
 
-- Keep API keys server-only (`process.env`, never `VITE_`).
+- Keep API keys server-only (`process.env`, never `NEXT_PUBLIC_`).
 - Rotate provider keys on suspicion of exposure.
 - Do not log full user message content unless explicitly required.
 - Honeypot field reduces basic automated spam traffic.
