@@ -14,18 +14,7 @@ npm install
 npm run dev
 ```
 
-Next.js dev server handles frontend rendering and route handlers under `/api/*`.
-
-## Local Env Setup
-
-Create a local env file (for example `.env.local`) with the variables you need:
-
-- Required if testing contact API in a serverless-compatible local runtime:
-  - `RESEND_API_KEY`
-  - `CONTACT_TO_EMAIL`
-  - `CONTACT_FROM_EMAIL`
-
-Never commit real secret values.
+No environment variables are required in the current clean-slate state.
 
 ## Build and Run
 
@@ -34,44 +23,22 @@ npm run build
 npm run start
 ```
 
-Build pipeline:
-
-1. Next.js production build (`next build`)
+Build pipeline is a single Next.js production build (`next build`).
 
 ## Deployment Model (Vercel)
 
 1. Connect/import repository in Vercel.
-2. Configure environment variables per target environment (Preview/Production).
-3. Deploy.
+2. Deploy.
 
 No custom rewrite config is required; Vercel auto-detects Next.js and handles routing.
 
 ## Runtime Dependencies
 
-- **Resend:** Contact submission delivery.
-- **Vercel Analytics + Speed Insights:** Frontend telemetry.
-
-## Monitoring and Troubleshooting
-
-## Contact Form Failures
-
-Symptoms:
-
-- User sees error message after submit.
-
-Checks:
-
-1. Confirm `/api/contact` method is POST.
-2. Check Vercel logs for missing env var errors.
-3. Verify Resend key validity and sender domain verification.
-4. Confirm payload constraints (email format, max lengths).
+- No third-party runtime dependencies are configured.
 
 ## Security and Compliance Notes
 
-- Keep API keys server-only (`process.env`).
-- Rotate provider keys on suspicion of exposure.
-- Do not log full user message content unless explicitly required.
-- Honeypot field reduces basic automated spam traffic.
+- Add secrets only when backend/API functionality is introduced.
 
 ## Recommended Operational Cadence
 

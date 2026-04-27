@@ -1,6 +1,6 @@
 # ClearSkeye
 
-A minimal, high-conversion landing page built with Next.js (App Router) and deployable on Vercel.
+A clean-slate Next.js project that renders a single all-black page.
 
 ## Local development
 
@@ -9,38 +9,15 @@ npm install
 npm run dev
 ```
 
-## Production build
+## Production
 
 ```bash
 npm run build
 npm run start
 ```
 
-## Vercel deployment
+## Notes
 
-- Import this repo into Vercel.
-- Set environment variables (below).
-- Deploy.
-
-### Environment variables
-
-#### Contact form (`/api/contact`)
-
-- `RESEND_API_KEY`: Resend API key.
-- `CONTACT_TO_EMAIL`: Where contact emails should go (your inbox).
-- `CONTACT_FROM_EMAIL`: Verified sender in Resend (e.g. `ClearSkeye <hello@yourdomain.com>`).
-
-## Customizing the site
-
-Edit the core copy and URLs in [`src/content/site.ts`](src/content/site.ts). Update `public/sitemap.xml` and `public/robots.txt` with your real domain.
-
-## Living documentation
-
-Detailed architecture and configuration docs live in [`living-docs/`](living-docs/):
-
-- [`living-docs/README.md`](living-docs/README.md)
-- [`living-docs/architecture-overview.md`](living-docs/architecture-overview.md)
-- [`living-docs/frontend-architecture.md`](living-docs/frontend-architecture.md)
-- [`living-docs/backend-api-architecture.md`](living-docs/backend-api-architecture.md)
-- [`living-docs/configuration-reference.md`](living-docs/configuration-reference.md)
-- [`living-docs/deployment-and-operations.md`](living-docs/deployment-and-operations.md)
+- No custom features are included.
+- No API routes are included.
+- Use this repo as a raw baseline for rebuilding.
