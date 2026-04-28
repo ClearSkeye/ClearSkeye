@@ -1,0 +1,118 @@
+.root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  contain: layout paint style;
+  --sky-top: 127 183 232;
+  --sky-upper: 169 207 241;
+  --sky-middle: 247 219 160;
+  --sky-lower: 255 189 114;
+  --sky-horizon: 255 159 90;
+  --glow-color-rgb: 255 240 191;
+  --glow-opacity: 0.7;
+  --glow-x: 50%;
+  --glow-y: 84%;
+  --glow-size: 42%;
+  --horizon-glow-opacity: 0.8;
+  --night-overlay-opacity: 0;
+  --star-opacity: 0;
+  --vignette-opacity: 0.08;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.base,
+.glow,
+.horizonGlow,
+.stars,
+.nightOverlay,
+.vignette {
+  position: absolute;
+  inset: 0;
+  will-change: opacity, transform;
+}
+
+.base {
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--sky-top)) 0%,
+    rgb(var(--sky-upper)) 22%,
+    rgb(var(--sky-middle)) 52%,
+    rgb(var(--sky-lower)) 76%,
+    rgb(var(--sky-horizon)) 100%
+  );
+}
+
+.glow {
+  background: radial-gradient(
+    circle at var(--glow-x) var(--glow-y),
+    rgb(var(--glow-color-rgb) / 0.95) 0%,
+    rgb(var(--glow-color-rgb) / 0.55) calc(var(--glow-size) * 0.6),
+    rgb(var(--glow-color-rgb) / 0.18) calc(var(--glow-size) * 1.1),
+    transparent calc(var(--glow-size) * 1.7)
+  );
+  opacity: var(--glow-opacity);
+  transform: translateZ(0);
+}
+
+.horizonGlow {
+  background: radial-gradient(
+    120% 56% at 50% 110%,
+    rgb(255 180 112 / 0.82) 0%,
+    rgb(255 160 96 / 0.42) 36%,
+    rgb(255 136 82 / 0.18) 60%,
+    transparent 82%
+  );
+  opacity: var(--horizon-glow-opacity);
+}
+
+.stars {
+  background:
+    radial-gradient(circle at 18% 18%, rgb(236 242 255 / 0.94) 0.09%, transparent 0.72%),
+    radial-gradient(circle at 35% 10%, rgb(236 242 255 / 0.8) 0.08%, transparent 0.7%),
+    radial-gradient(circle at 56% 24%, rgb(230 238 255 / 0.86) 0.1%, transparent 0.76%),
+    radial-gradient(circle at 78% 14%, rgb(238 244 255 / 0.92) 0.08%, transparent 0.71%),
+    radial-gradient(circle at 12% 34%, rgb(230 238 255 / 0.76) 0.1%, transparent 0.84%),
+    radial-gradient(circle at 28% 28%, rgb(236 242 255 / 0.82) 0.09%, transparent 0.8%),
+    radial-gradient(circle at 44% 38%, rgb(238 244 255 / 0.88) 0.08%, transparent 0.73%),
+    radial-gradient(circle at 63% 30%, rgb(232 240 255 / 0.78) 0.1%, transparent 0.82%),
+    radial-gradient(circle at 82% 36%, rgb(236 242 255 / 0.86) 0.09%, transparent 0.79%),
+    radial-gradient(circle at 92% 22%, rgb(236 242 255 / 0.81) 0.08%, transparent 0.72%);
+  opacity: var(--star-opacity);
+}
+
+.nightOverlay {
+  background: linear-gradient(
+    180deg,
+    rgb(10 20 48 / 0.62) 0%,
+    rgb(8 18 44 / 0.74) 54%,
+    rgb(7 15 34 / 0.84) 100%
+  );
+  opacity: var(--night-overlay-opacity);
+}
+
+.vignette {
+  background: radial-gradient(
+    120% 100% at 50% 44%,
+    transparent 44%,
+    rgb(8 14 30 / 0.16) 72%,
+    rgb(8 14 30 / 0.32) 100%
+  );
+  opacity: var(--vignette-opacity);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .base,
+  .glow,
+  .horizonGlow,
+  .stars,
+  .nightOverlay,
+  .vignette {
+    transition: opacity 260ms ease-out;
+    will-change: auto;
+  }
+}

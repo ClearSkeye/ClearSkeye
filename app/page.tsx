@@ -1,3 +1,5 @@
+import { DayCycleSkyBackground } from "./components/DayCycleSkyBackground/DayCycleSkyBackground"
+
 const subsidiaries = [
   {
     name: 'BigSkeye',
@@ -40,6 +42,11 @@ const subsidiaries = [
 export default function HomePage() {
   return (
     <main id="main-content" className="page">
+      <DayCycleSkyBackground
+        durationSeconds={240}
+        reducedMotionPhase="morning"
+      />
+
       <a className="skip-link" href="#portfolio">
         Skip to subsidiary portfolio
       </a>
