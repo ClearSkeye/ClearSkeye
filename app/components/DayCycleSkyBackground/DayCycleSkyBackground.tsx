@@ -99,7 +99,6 @@ export function DayCycleSkyBackground({
   className,
   fixed = true,
   intensity = 1,
-  showStars = true,
   showSunGlow = true,
   reducedMotionPhase = "morning",
 }: DayCycleSkyBackgroundProps) {
@@ -138,7 +137,7 @@ export function DayCycleSkyBackground({
       root.style.setProperty("--glow-size", `${state.glowSize.toFixed(2)}%`)
       root.style.setProperty("--horizon-glow-opacity", (state.horizonGlowOpacity * intensityValue).toFixed(4))
       root.style.setProperty("--night-overlay-opacity", (state.nightOverlayOpacity * intensityValue).toFixed(4))
-      root.style.setProperty("--star-opacity", (showStars ? state.starOpacity * intensityValue : 0).toFixed(4))
+      root.style.setProperty("--star-opacity", "0")
       root.style.setProperty("--vignette-opacity", clamp(state.vignetteOpacity * intensityValue, 0, 0.6).toFixed(4))
       root.style.setProperty("--sky-darkness", skyDarkness.toFixed(4))
     }
@@ -211,14 +210,13 @@ export function DayCycleSkyBackground({
       mediaQuery.removeEventListener("change", onMotionChange)
       document.removeEventListener("visibilitychange", onVisibilityChange)
     }
-  }, [durationMs, intensityValue, reducedMotionPhase, showStars, showSunGlow])
+  }, [durationMs, intensityValue, reducedMotionPhase, showSunGlow])
 
   return (
     <div ref={rootRef} className={containerClassName} aria-hidden="true" role="presentation">
       <div className={styles.base} />
       <div className={styles.glow} />
       <div className={styles.horizonGlow} />
-      <div className={styles.stars} />
       <div className={styles.nightOverlay} />
       <div className={styles.vignette} />
     </div>
