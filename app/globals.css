@@ -50,6 +50,36 @@ a {
 .page {
   position: relative;
   isolation: isolate;
+  --sky-darkness: 0;
+  --page-text-primary-rgb: calc(38 + (224 - 38) * var(--sky-darkness))
+    calc(50 + (232 - 50) * var(--sky-darkness))
+    calc(64 + (243 - 64) * var(--sky-darkness));
+  --page-text-secondary-rgb: calc(82 + (190 - 82) * var(--sky-darkness))
+    calc(96 + (201 - 96) * var(--sky-darkness))
+    calc(114 + (219 - 114) * var(--sky-darkness));
+  --page-border-soft-rgb: calc(194 + (110 - 194) * var(--sky-darkness))
+    calc(207 + (131 - 207) * var(--sky-darkness))
+    calc(224 + (176 - 224) * var(--sky-darkness));
+  --page-surface-rgb: calc(244 + (22 - 244) * var(--sky-darkness))
+    calc(248 + (33 - 248) * var(--sky-darkness))
+    calc(253 + (56 - 253) * var(--sky-darkness));
+  --page-surface-strong-rgb: calc(236 + (30 - 236) * var(--sky-darkness))
+    calc(242 + (44 - 242) * var(--sky-darkness))
+    calc(248 + (70 - 248) * var(--sky-darkness));
+  --page-accent-rgb: calc(68 + (129 - 68) * var(--sky-darkness))
+    calc(128 + (175 - 128) * var(--sky-darkness))
+    calc(227 + (250 - 227) * var(--sky-darkness));
+  --page-accent-strong-rgb: calc(56 + (113 - 56) * var(--sky-darkness))
+    calc(112 + (160 - 112) * var(--sky-darkness))
+    calc(207 + (236 - 207) * var(--sky-darkness));
+  --page-text-primary: rgb(var(--page-text-primary-rgb));
+  --page-text-secondary: rgb(var(--page-text-secondary-rgb));
+  --page-border-soft: rgb(var(--page-border-soft-rgb));
+  --page-surface: rgb(var(--page-surface-rgb) / 0.9);
+  --page-surface-strong: rgb(var(--page-surface-strong-rgb) / 0.93);
+  --page-accent: rgb(var(--page-accent-rgb));
+  --page-accent-strong: rgb(var(--page-accent-strong-rgb));
+  color: var(--page-text-primary);
   max-width: var(--container);
   margin: 0 auto;
   padding: max(var(--space-5), env(safe-area-inset-top))
@@ -67,8 +97,8 @@ a {
   position: absolute;
   top: -6rem;
   left: var(--space-4);
-  background: var(--accent-strong);
-  color: var(--bg-main);
+  background: var(--page-accent-strong);
+  color: rgb(246 250 255);
   border-radius: 0.5rem;
   padding: var(--space-3) var(--space-4);
   font-weight: 600;
@@ -92,7 +122,7 @@ a {
   gap: var(--space-4);
   max-width: var(--content-max);
   margin-inline: 0;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--page-border-soft);
   padding-bottom: var(--space-4);
 }
 
@@ -106,8 +136,8 @@ a {
 
 .site-contact {
   font-size: 0.95rem;
-  color: var(--text-secondary);
-  text-decoration-color: color-mix(in oklab, var(--text-secondary), transparent 35%);
+  color: var(--page-text-secondary);
+  text-decoration-color: color-mix(in oklab, var(--page-text-secondary), transparent 35%);
   text-underline-offset: 0.22em;
 }
 
@@ -121,7 +151,7 @@ a {
 
 .eyebrow {
   margin: 0 0 var(--space-3);
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   font-size: 0.82rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -146,7 +176,7 @@ h1 {
 .hero-copy {
   margin: 0;
   max-width: var(--text-measure);
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
 }
 
 .portfolio {
@@ -164,7 +194,7 @@ h1 {
 .portfolio-heading p {
   margin: var(--space-3) 0 0;
   max-width: var(--text-measure);
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
 }
 
 .subsidiary-grid {
@@ -186,8 +216,8 @@ h1 {
 .subsidiary-card {
   height: 100%;
   width: 100%;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-soft);
+  background: var(--page-surface);
+  border: 1px solid var(--page-border-soft);
   border-radius: var(--radius-card);
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr) auto auto;
@@ -204,7 +234,7 @@ h1 {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   font-weight: 600;
 }
 
@@ -217,7 +247,7 @@ h1 {
 .subsidiary-summary {
   margin: 0;
   max-width: 34ch;
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
 }
 
 .subsidiary-meta {
@@ -225,14 +255,14 @@ h1 {
   display: grid;
   gap: var(--space-1);
   padding-top: var(--space-2);
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--page-border-soft);
 }
 
 .subsidiary-meta dt {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
   font-weight: 600;
 }
 
@@ -249,7 +279,7 @@ h1 {
   min-height: 2.75rem;
   width: fit-content;
   border-radius: 999px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--page-border-soft);
   padding: 0.6rem 1rem;
   font-weight: 600;
   text-decoration: none;
@@ -266,7 +296,7 @@ h1 {
   max-width: var(--content-max);
   margin-inline: 0;
   margin-top: var(--space-8);
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--page-border-soft);
   padding-top: var(--space-6);
   display: grid;
   gap: var(--space-4);
@@ -280,12 +310,12 @@ h1 {
 .contact p {
   margin: 0;
   max-width: var(--text-measure);
-  color: var(--text-secondary);
+  color: var(--page-text-secondary);
 }
 
 .contact-cta {
-  background: var(--accent);
-  color: oklch(98% 0.007 238);
+  background: var(--page-accent);
+  color: rgb(248 251 255);
   border-color: transparent;
 }
 
@@ -298,22 +328,22 @@ h1 {
 
 @media (hover: hover) {
   .site-contact:hover {
-    color: var(--text-primary);
+    color: var(--page-text-primary);
   }
 
   .subsidiary-card:hover {
     transform: translateY(-3px);
-    border-color: color-mix(in oklab, var(--accent), var(--border-soft) 50%);
-    background: var(--bg-surface-strong);
+    border-color: color-mix(in oklab, var(--page-accent), var(--page-border-soft) 50%);
+    background: var(--page-surface-strong);
   }
 
   .subsidiary-cta:hover {
-    border-color: color-mix(in oklab, var(--accent), var(--border-soft) 35%);
-    color: var(--accent-strong);
+    border-color: color-mix(in oklab, var(--page-accent), var(--page-border-soft) 35%);
+    color: var(--page-accent-strong);
   }
 
   .contact-cta:hover {
-    background: var(--accent-strong);
+    background: var(--page-accent-strong);
   }
 }
 

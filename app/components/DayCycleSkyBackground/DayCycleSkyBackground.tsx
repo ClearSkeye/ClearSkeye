@@ -118,6 +118,14 @@ export function DayCycleSkyBackground({
     if (!root) return
 
     const applyState = (state: ComputedSkyState) => {
+      const effectiveNight = clamp(state.nightOverlayOpacity * intensityValue, 0, 1)
+      const effectiveVignette = clamp(state.vignetteOpacity * intensityValue, 0, 1)
+      const skyDarkness = clamp(
+        effectiveNight * 0.82 + effectiveVignette * 0.28,
+        0,
+        1,
+      )
+
       root.style.setProperty("--sky-top", state.skyTop)
       root.style.setProperty("--sky-upper", state.skyUpper)
       root.style.setProperty("--sky-middle", state.skyMiddle)
@@ -132,6 +140,7 @@ export function DayCycleSkyBackground({
       root.style.setProperty("--night-overlay-opacity", (state.nightOverlayOpacity * intensityValue).toFixed(4))
       root.style.setProperty("--star-opacity", (showStars ? state.starOpacity * intensityValue : 0).toFixed(4))
       root.style.setProperty("--vignette-opacity", clamp(state.vignetteOpacity * intensityValue, 0, 0.6).toFixed(4))
+      root.style.setProperty("--sky-darkness", skyDarkness.toFixed(4))
     }
 
     const renderPhase = (phase: ReducedMotionPhase) => {
