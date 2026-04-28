@@ -1,6 +1,6 @@
 # ClearSkeye
 
-A clean-slate Next.js project that renders a single all-black page.
+A Next.js App Router site for the Clearskeye holding-company landing experience.
 
 ## Local development
 
@@ -18,14 +18,16 @@ npm run start
 
 ## Notes
 
-- No custom features are included.
-- No API routes are included.
-- Use this repo as a raw baseline for rebuilding.
+- The frontend includes a production-style multi-section landing page.
+- No backend API routes are included yet.
+- The animated sky background is implemented as a reusable client component.
 
 ## DayCycleSkyBackground
 
 `DayCycleSkyBackground` is available at `app/components/DayCycleSkyBackground/DayCycleSkyBackground.tsx`.
 It is decorative (`aria-hidden`), non-interactive (`pointer-events: none`), and intended to sit behind page content.
+It runs in the browser with `requestAnimationFrame` and CSS custom properties.
+Night mode is a clear atmospheric gradient with no stars.
 
 ### Recommended stacking pattern
 
