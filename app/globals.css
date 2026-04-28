@@ -165,7 +165,7 @@ h1 {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   grid-auto-rows: 1fr;
   gap: var(--space-4);
   align-items: stretch;
@@ -178,6 +178,7 @@ h1 {
 
 .subsidiary-card {
   height: 100%;
+  width: 100%;
   background: var(--bg-surface);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-card);
@@ -340,8 +341,9 @@ h1 {
   }
 }
 
-@media (min-width: 64rem) {
+@media (min-width: 48rem) {
   .subsidiary-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
   }
 }
