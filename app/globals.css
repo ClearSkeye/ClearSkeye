@@ -18,6 +18,8 @@
   --space-8: 4rem;
   --radius-card: 1rem;
   --container: 70rem;
+  --content-max: 64rem;
+  --text-measure: 62ch;
   --focus-ring: 0 0 0 3px oklch(80% 0.07 243);
 }
 
@@ -81,6 +83,8 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
+  max-width: var(--content-max);
+  margin-inline: 0;
   border-bottom: 1px solid var(--border-soft);
   padding-bottom: var(--space-4);
 }
@@ -101,7 +105,11 @@ a {
 }
 
 .hero {
+  max-width: var(--content-max);
+  margin-inline: 0;
   margin-bottom: var(--space-8);
+  display: grid;
+  gap: var(--space-4);
 }
 
 .eyebrow {
@@ -124,17 +132,19 @@ h1 {
   max-width: 21ch;
   font-family: "Iowan Old Style", "Times New Roman", serif;
   font-size: clamp(2rem, 3.5vw + 1rem, 4rem);
-  line-height: 1.06;
+  line-height: 1.04;
   letter-spacing: 0.01em;
 }
 
 .hero-copy {
-  margin: var(--space-5) 0 0;
-  max-width: 66ch;
+  margin: 0;
+  max-width: var(--text-measure);
   color: var(--text-secondary);
 }
 
 .portfolio {
+  max-width: var(--content-max);
+  margin-inline: 0;
   display: grid;
   gap: var(--space-6);
 }
@@ -146,7 +156,7 @@ h1 {
 
 .portfolio-heading p {
   margin: var(--space-3) 0 0;
-  max-width: 62ch;
+  max-width: var(--text-measure);
   color: var(--text-secondary);
 }
 
@@ -157,6 +167,11 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: var(--space-4);
+  align-items: stretch;
+}
+
+.subsidiary-grid > li {
+  display: flex;
 }
 
 .subsidiary-card {
@@ -165,8 +180,9 @@ h1 {
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-card);
   display: grid;
-  gap: var(--space-4);
-  align-content: start;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  gap: var(--space-3);
+  align-content: stretch;
   padding: var(--space-5);
   transition: transform 220ms cubic-bezier(0.25, 1, 0.5, 1),
     border-color 220ms cubic-bezier(0.25, 1, 0.5, 1),
@@ -183,12 +199,14 @@ h1 {
 }
 
 .subsidiary-card h3 {
+  margin-top: 0;
   font-size: 1.35rem;
-  line-height: 1.2;
+  line-height: 1.18;
 }
 
 .subsidiary-summary {
   margin: 0;
+  max-width: 34ch;
   color: var(--text-secondary);
 }
 
@@ -196,6 +214,8 @@ h1 {
   margin: 0;
   display: grid;
   gap: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-soft);
 }
 
 .subsidiary-meta dt {
@@ -228,7 +248,13 @@ h1 {
     background-color 180ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+.subsidiary-cta {
+  margin-top: var(--space-2);
+}
+
 .contact {
+  max-width: var(--content-max);
+  margin-inline: 0;
   margin-top: var(--space-8);
   border-top: 1px solid var(--border-soft);
   padding-top: var(--space-6);
@@ -243,7 +269,7 @@ h1 {
 
 .contact p {
   margin: 0;
-  max-width: 60ch;
+  max-width: var(--text-measure);
   color: var(--text-secondary);
 }
 
@@ -305,5 +331,15 @@ h1 {
 
   .subsidiary-card {
     padding: var(--space-4);
+  }
+
+  .subsidiary-summary {
+    max-width: none;
+  }
+}
+
+@media (min-width: 64rem) {
+  .subsidiary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
