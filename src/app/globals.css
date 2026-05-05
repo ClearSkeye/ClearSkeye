@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant theme-system (&:where([data-theme="system"], [data-theme="system"] *));
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-canvas: oklch(0.99 0 0);
+  --color-canvas-dark: oklch(0.145 0 0);
+  --color-ink: oklch(0.145 0 0);
+  --color-ink-dark: oklch(0.985 0 0);
+  --color-accent: oklch(0.65 0.21 256);
+  --color-accent-soft: oklch(0.92 0.05 256);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --background: var(--color-canvas);
+    --foreground: var(--color-ink);
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --background: var(--color-canvas-dark);
+    --foreground: var(--color-ink-dark);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-theme="system"] {
+      color-scheme: dark;
+      --background: var(--color-canvas-dark);
+      --foreground: var(--color-ink-dark);
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  ::selection {
+    background-color: var(--color-accent-soft);
+    color: var(--color-ink);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .gradient-mesh {
+    background-image:
+      radial-gradient(at 20% 10%, oklch(0.85 0.15 256 / 0.45) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, oklch(0.85 0.18 320 / 0.4) 0px, transparent 50%),
+      radial-gradient(at 0% 90%, oklch(0.9 0.12 180 / 0.35) 0px, transparent 50%),
+      radial-gradient(at 90% 95%, oklch(0.85 0.15 32 / 0.3) 0px, transparent 50%);
+  }
+
+  [data-theme="dark"] .gradient-mesh,
+  [data-theme="system"] .gradient-mesh {
+    background-image:
+      radial-gradient(at 20% 10%, oklch(0.55 0.2 256 / 0.35) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, oklch(0.55 0.22 320 / 0.3) 0px, transparent 50%),
+      radial-gradient(at 0% 90%, oklch(0.55 0.18 180 / 0.25) 0px, transparent 50%),
+      radial-gradient(at 90% 95%, oklch(0.55 0.2 32 / 0.25) 0px, transparent 50%);
+  }
+
+  @media (prefers-color-scheme: light) {
+    [data-theme="system"] .gradient-mesh {
+      background-image:
+        radial-gradient(at 20% 10%, oklch(0.85 0.15 256 / 0.45) 0px, transparent 50%),
+        radial-gradient(at 80% 0%, oklch(0.85 0.18 320 / 0.4) 0px, transparent 50%),
+        radial-gradient(at 0% 90%, oklch(0.9 0.12 180 / 0.35) 0px, transparent 50%),
+        radial-gradient(at 90% 95%, oklch(0.85 0.15 32 / 0.3) 0px, transparent 50%);
+    }
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in oklch, currentColor 8%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklch, currentColor 8%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 8s linear infinite;
+}
