@@ -176,7 +176,7 @@ pnpm install
 pnpm dev
 ```
 
-Then open <http://localhost:3000>. Requires **Node.js 22+** (see `.nvmrc`).
+Then open <http://localhost:3000>. Requires **Node.js 24 LTS** (see `.nvmrc`) — matches Vercel's production runtime.
 
 For end-to-end tests, install browsers once:
 
