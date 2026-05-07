@@ -1,62 +1,138 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-@custom-variant theme-system (&:where([data-theme="system"], [data-theme="system"] *));
+/* ============================================================
+   ClearSkeye design tokens
+   Sight before design.
+
+   Source of truth: docs/clearskeye-design-tokens.css and
+   docs/clearskeye-tailwind-preset.js. Tailwind v4 picks up the
+   tokens declared inside @theme and exposes them as utilities
+   (bg-paper, text-ink, font-serif, text-display-1, ...).
+   ============================================================ */
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-ink: #0f1e2a;
+  --color-meridian: #1e3340;
+  --color-sightline: #6e7c85;
+  --color-horizon: #c9a35b;
+  --color-paper: #f4f0e8;
+  --color-paper-light: #faf8f2;
+  --color-rule: #d8d2c4;
+  --color-affirm: #4f7a5f;
+  --color-caution: #b8924a;
+  --color-halt: #8b3a3a;
 
-  --color-canvas: oklch(0.99 0 0);
-  --color-canvas-dark: oklch(0.145 0 0);
-  --color-ink: oklch(0.145 0 0);
-  --color-ink-dark: oklch(0.985 0 0);
-  --color-accent: oklch(0.65 0.21 256);
-  --color-accent-soft: oklch(0.92 0.05 256);
+  --font-serif: var(--font-spectral), "Tiempos Headline", Spectral, Georgia, serif;
+  --font-sans: var(--font-inter), "Söhne", Inter, system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", "IBM Plex Mono", Consolas, monospace;
+
+  --text-display-1: 4rem;
+  --text-display-1--line-height: 1.05;
+  --text-display-1--letter-spacing: -0.02em;
+
+  --text-display-2: 3rem;
+  --text-display-2--line-height: 1.1;
+  --text-display-2--letter-spacing: -0.02em;
+
+  --text-heading-1: 2.25rem;
+  --text-heading-1--line-height: 1.15;
+  --text-heading-1--letter-spacing: -0.01em;
+
+  --text-heading-2: 1.75rem;
+  --text-heading-2--line-height: 1.2;
+  --text-heading-2--letter-spacing: -0.01em;
+
+  --text-heading-3: 1.375rem;
+  --text-heading-3--line-height: 1.3;
+  --text-heading-3--letter-spacing: 0;
+
+  --text-body-large: 1.125rem;
+  --text-body-large--line-height: 1.6;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.55;
+
+  --text-eyebrow: 0.875rem;
+  --text-eyebrow--line-height: 1.55;
+  --text-eyebrow--letter-spacing: 0.1em;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  --max-w-content: 1280px;
+  --max-w-reading: 720px;
+
+  --ease-calm: cubic-bezier(0.2, 0, 0, 1);
+  --default-transition-duration: 400ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+
+  --animate-rise: rise 400ms cubic-bezier(0.2, 0, 0, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 @layer base {
   :root {
     color-scheme: light;
-    --background: var(--color-canvas);
-    --foreground: var(--color-ink);
-  }
-
-  [data-theme="dark"] {
-    color-scheme: dark;
-    --background: var(--color-canvas-dark);
-    --foreground: var(--color-ink-dark);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    [data-theme="system"] {
-      color-scheme: dark;
-      --background: var(--color-canvas-dark);
-      --foreground: var(--color-ink-dark);
-    }
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
   }
 
   body {
-    background: var(--background);
-    color: var(--foreground);
-    font-feature-settings: "ss01", "cv11";
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "ss01", "cv11", "kern";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
   }
 
   ::selection {
-    background-color: var(--color-accent-soft);
+    background-color: var(--color-horizon);
     color: var(--color-ink);
   }
 
   *:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-    border-radius: 4px;
+    outline: 2px solid var(--color-horizon);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--color-rule);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -71,50 +147,42 @@
   }
 }
 
+/* ============================================================
+   ClearSkeye text primitives.
+   Use these on structural elements when you want the canonical
+   editorial tone. They map onto the type scale in @theme.
+   ============================================================ */
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    line-height: 1.55;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-sightline);
+    font-weight: 600;
+  }
+
+  .lead {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: var(--text-heading-3);
+    line-height: 1.5;
+    color: var(--color-ink);
+    letter-spacing: 0;
+  }
+
+  .reading-column {
+    max-width: 65ch;
+  }
+
+  .rule {
+    border-top: 1px solid var(--color-rule);
+  }
+}
+
 @layer utilities {
-  .gradient-mesh {
-    background-image:
-      radial-gradient(at 20% 10%, oklch(0.85 0.15 256 / 0.45) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, oklch(0.85 0.18 320 / 0.4) 0px, transparent 50%),
-      radial-gradient(at 0% 90%, oklch(0.9 0.12 180 / 0.35) 0px, transparent 50%),
-      radial-gradient(at 90% 95%, oklch(0.85 0.15 32 / 0.3) 0px, transparent 50%);
-  }
-
-  [data-theme="dark"] .gradient-mesh,
-  [data-theme="system"] .gradient-mesh {
-    background-image:
-      radial-gradient(at 20% 10%, oklch(0.55 0.2 256 / 0.35) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, oklch(0.55 0.22 320 / 0.3) 0px, transparent 50%),
-      radial-gradient(at 0% 90%, oklch(0.55 0.18 180 / 0.25) 0px, transparent 50%),
-      radial-gradient(at 90% 95%, oklch(0.55 0.2 32 / 0.25) 0px, transparent 50%);
-  }
-
-  @media (prefers-color-scheme: light) {
-    [data-theme="system"] .gradient-mesh {
-      background-image:
-        radial-gradient(at 20% 10%, oklch(0.85 0.15 256 / 0.45) 0px, transparent 50%),
-        radial-gradient(at 80% 0%, oklch(0.85 0.18 320 / 0.4) 0px, transparent 50%),
-        radial-gradient(at 0% 90%, oklch(0.9 0.12 180 / 0.35) 0px, transparent 50%),
-        radial-gradient(at 90% 95%, oklch(0.85 0.15 32 / 0.3) 0px, transparent 50%);
-    }
-  }
-
-  .grid-bg {
-    background-image:
-      linear-gradient(
-        to right,
-        color-mix(in oklch, currentColor 8%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        color-mix(in oklch, currentColor 8%, transparent) 1px,
-        transparent 1px
-      );
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
-  }
-
   .text-balance {
     text-wrap: balance;
   }
@@ -122,18 +190,12 @@
   .text-pretty {
     text-wrap: pretty;
   }
-}
 
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
+  /*
+   * The brand's only animation: a slow rise on first reveal.
+   * Used sparingly. Honours prefers-reduced-motion via base layer.
+   */
+  .rise {
+    animation: var(--animate-rise);
   }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.animate-shimmer {
-  background-size: 200% 100%;
-  animation: shimmer 8s linear infinite;
 }

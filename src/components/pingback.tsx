@@ -3,61 +3,67 @@
 import { useActionState } from "react";
 
 import { ping, type PingState } from "@/app/actions";
+import { ArrowRightIcon } from "@/components/icons";
 
 const initialState: PingState = { status: "idle" };
 
 export function Pingback() {
   const [state, formAction, isPending] = useActionState(ping, initialState);
 
+  const isError = state.status === "error";
+
   return (
     <form
       action={formAction}
-      className="border-foreground/10 bg-background/60 flex flex-col gap-4 rounded-3xl border p-6 backdrop-blur sm:p-8"
+      noValidate
+      className="flex flex-col gap-8"
+      aria-describedby="pingback-status"
     >
-      <label
-        htmlFor="message"
-        className="text-foreground/60 font-mono text-xs tracking-widest uppercase"
-      >
-        Send a message to the server
-      </label>
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-3">
+        <label
+          htmlFor="message"
+          className="text-small text-sightline font-semibold tracking-[0.1em] uppercase"
+        >
+          Your note
+        </label>
         <input
           id="message"
           name="message"
           required
           minLength={1}
           maxLength={120}
-          placeholder="Hello from the edge"
           autoComplete="off"
-          className="border-foreground/15 bg-background/80 text-foreground placeholder:text-foreground/40 focus:border-accent focus:ring-accent/30 flex-1 rounded-full border px-5 py-3 font-mono text-sm transition outline-none focus:ring-2"
+          aria-invalid={isError ? "true" : undefined}
+          placeholder="What are you trying to look at?"
+          className="border-rule bg-paper-light text-body text-ink placeholder:text-sightline focus:border-ink data-[invalid=true]:border-halt w-full rounded-xs border px-5 py-4 font-sans focus:border-2 focus:outline-none"
+          data-invalid={isError ? "true" : "false"}
         />
+        <p className="text-small text-sightline">
+          One sentence is enough. We answer to a person, never a form queue.
+        </p>
+      </div>
+
+      <div>
         <button
           type="submit"
           disabled={isPending}
-          className="bg-foreground text-background hover:bg-foreground/90 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60"
+          className="group bg-ink text-body text-paper hover:bg-meridian focus-visible:outline-horizon inline-flex items-center justify-center gap-3 rounded-sm px-6 py-4 font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isPending ? "Pinging…" : "Ping server"}
+          {isPending ? "Sending" : "Send the note"}
+          <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
         </button>
       </div>
 
-      <output
-        aria-live="polite"
-        className="border-foreground/15 bg-background/40 text-foreground/80 min-h-12 rounded-2xl border border-dashed px-4 py-3 font-mono text-xs"
-      >
-        {state.status === "idle" && <span className="text-foreground/50">Waiting for input…</span>}
+      <div id="pingback-status" aria-live="polite" role="status" className="text-small min-h-6">
         {state.status === "ok" && (
-          <span>
-            <span className="text-emerald-500">200</span> · echoed{" "}
-            <span className="text-foreground font-semibold">{state.echoed}</span> in {state.tookMs}
-            ms — handled by <span className="text-foreground/70">{state.handledBy}</span>
-          </span>
+          <p className="text-affirm">
+            Received. Echoed{" "}
+            <span className="text-ink font-semibold">&ldquo;{state.echoed}&rdquo;</span> in{" "}
+            {state.tookMs} milliseconds.
+          </p>
         )}
-        {state.status === "error" && (
-          <span>
-            <span className="text-rose-500">{state.code}</span> · {state.message}
-          </span>
-        )}
-      </output>
+        {state.status === "error" && <p className="text-halt">{state.message}</p>}
+      </div>
     </form>
   );
 }

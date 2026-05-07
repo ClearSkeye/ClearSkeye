@@ -7,10 +7,5 @@ export async function LikeIsland() {
 }
 
 export function LikeIslandSkeleton() {
-  return (
-    <div
-      aria-hidden
-      className="animate-shimmer border-foreground/10 from-foreground/5 via-foreground/15 to-foreground/5 inline-flex h-11 w-44 rounded-full border bg-gradient-to-r"
-    />
-  );
+  return <div aria-hidden className="border-rule bg-paper-light inline-flex h-12 w-44 border" />;
 }

@@ -13,8 +13,8 @@ export async function ThemeToggle() {
   return (
     <div
       role="radiogroup"
-      aria-label="Color theme"
-      className="border-foreground/15 bg-background/60 inline-flex items-center gap-1 rounded-full border p-1 backdrop-blur"
+      aria-label="Colour theme"
+      className="border-rule bg-paper-light inline-flex items-center gap-px border p-1"
     >
       {OPTIONS.map((option) => {
         const isActive = option.value === current;
@@ -26,7 +26,7 @@ export async function ThemeToggle() {
               role="radio"
               aria-checked={isActive}
               data-state={isActive ? "on" : "off"}
-              className="text-foreground/70 data-[state=on]:bg-foreground data-[state=on]:text-background hover:text-foreground rounded-full px-3 py-1 text-xs font-medium transition"
+              className="text-small text-sightline data-[state=on]:bg-ink data-[state=on]:text-paper hover:text-ink px-3 py-1 font-semibold"
             >
               {option.label}
             </button>
@@ -39,9 +39,6 @@ export async function ThemeToggle() {
 
 export function ThemeToggleSkeleton() {
   return (
-    <div
-      aria-hidden
-      className="animate-shimmer border-foreground/10 from-foreground/5 via-foreground/15 to-foreground/5 inline-flex h-8 w-[180px] rounded-full border bg-gradient-to-r"
-    />
+    <div aria-hidden className="border-rule bg-paper-light inline-flex h-8 w-[180px] border" />
   );
 }

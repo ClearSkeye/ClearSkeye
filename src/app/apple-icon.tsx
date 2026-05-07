@@ -12,14 +12,22 @@ export default function AppleIcon() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, oklch(0.65 0.21 256) 0%, oklch(0.55 0.22 320) 100%)",
-        color: "white",
-        fontSize: 96,
-        fontWeight: 700,
-        letterSpacing: "-0.04em",
+        background: "#F4F0E8",
+        color: "#0F1E2A",
       }}
     >
-      CS
+      <svg
+        width="96"
+        height="96"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#0F1E2A"
+        strokeWidth="1.25"
+        strokeLinecap="square"
+      >
+        <line x1="12" y1="2" x2="12" y2="22" />
+        <line x1="3" y1="9" x2="21" y2="9" />
+      </svg>
     </div>,
     { ...size },
   );

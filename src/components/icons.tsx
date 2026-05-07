@@ -1,39 +1,104 @@
 import type { SVGProps } from "react";
 
-export function GitHubIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"
-      />
-    </svg>
-  );
-}
+/* ============================================================
+   ClearSkeye iconography.
+   Line icons only. One stroke unit thickness. Square caps.
+   Drawn on a 24 pixel grid. No fills. Recoloured to currentColor
+   so they inherit Ink, Sightline, or Paper from their parent.
+   ============================================================ */
 
-export function VercelIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M12 2 22 20H2L12 2Z" />
-    </svg>
-  );
-}
+type IconProps = SVGProps<SVGSVGElement> & {
+  title?: string;
+};
 
-export function ArrowRightIcon(props: SVGProps<SVGSVGElement>) {
+function BaseIcon({ title, children, ...rest }: IconProps & { children: React.ReactNode }) {
+  const ariaProps = title
+    ? { role: "img" as const, "aria-label": title }
+    : { "aria-hidden": true as const };
   return (
     <svg
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
+      strokeWidth="1.25"
+      strokeLinecap="square"
+      strokeLinejoin="miter"
+      {...ariaProps}
+      {...rest}
     >
-      <path d="M5 12h14" />
-      <path d="m13 5 7 7-7 7" />
+      {children}
     </svg>
+  );
+}
+
+/**
+ * The sightline mark. The brand's secondary mark, used wherever
+ * the wordmark cannot be set (favicons, tight social squares).
+ * Vertical line crossed at one third from the top by a horizontal
+ * of equal stroke. Reads as a sightline crossing a horizon.
+ */
+export function SightlineMark(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <line x1="12" y1="2" x2="12" y2="22" />
+      <line x1="3" y1="9" x2="21" y2="9" />
+    </BaseIcon>
+  );
+}
+
+export function ArrowRightIcon(props: IconProps) {
+  return (
+    <BaseIcon strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M4 12h15" />
+      <path d="m13 5 7 7-7 7" />
+    </BaseIcon>
+  );
+}
+
+export function MailIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <rect x="3" y="5" width="18" height="14" />
+      <path d="m3 6 9 7 9-7" />
+    </BaseIcon>
+  );
+}
+
+/* The legacy marks below are retained for non-brand surfaces
+   such as build tools or repository links. They are line drawn
+   to match the brand's icon discipline. */
+
+export function GitHubIcon(props: IconProps) {
+  return (
+    <BaseIcon strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M9 19c-4 1.5-4-2-6-2" />
+      <path d="M15 21v-3.5c0-1 0-1.5-.5-2 2.5-.3 5-1.5 5-5.5a4.4 4.4 0 0 0-1.2-3.1 4 4 0 0 0-.1-3.1s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6 0C6.4 1.5 5.4 1.8 5.4 1.8a4 4 0 0 0-.1 3.1A4.4 4.4 0 0 0 4 8c0 4 2.5 5.2 5 5.5-.5.5-.5 1-.5 2V21" />
+    </BaseIcon>
+  );
+}
+
+/**
+ * The wordmark. The firm name set in the display serif at light
+ * weight, with a single graphical descender on the Y. Use this
+ * wherever the wordmark fits. For tight squares use SightlineMark.
+ */
+export function Wordmark({
+  className,
+  size = "default",
+}: {
+  className?: string;
+  size?: "default" | "small";
+}) {
+  const fontSize = size === "small" ? "1.25rem" : "1.75rem";
+  return (
+    <span
+      className={`relative inline-flex items-baseline font-serif leading-none font-light tracking-tight ${
+        className ?? ""
+      }`}
+      style={{ fontSize }}
+    >
+      <span aria-hidden>ClearSkeye</span>
+      <span className="sr-only">ClearSkeye</span>
+    </span>
   );
 }

@@ -5,11 +5,11 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "ClearSkeye",
     short_name: "ClearSkeye",
     description:
-      "A reference Next.js 16 project running React 19, the React Compiler, Tailwind CSS v4, and Turbopack — deployed on Vercel.",
+      "ClearSkeye designs target operating models for the largest enterprises in the world. Sight before design.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a0a",
-    theme_color: "#0a0a0a",
+    background_color: "#F4F0E8",
+    theme_color: "#F4F0E8",
     icons: [
       {
         src: "/icon",

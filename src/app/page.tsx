@@ -1,93 +1,114 @@
-import { Suspense } from "react";
-
 import { Hero } from "@/components/hero";
-import { StackGrid } from "@/components/stack-grid";
-import { LiveStats, LiveStatsSkeleton } from "@/components/live-stats";
+import { MethodGrid } from "@/components/method-grid";
 import { Pingback } from "@/components/pingback";
-import { LikeIsland, LikeIslandSkeleton } from "@/components/like-island";
 import { Footer } from "@/components/footer";
 
 export default function HomePage() {
   return (
     <>
-      <main id="main" className="relative isolate min-h-svh overflow-hidden">
-        <div
-          aria-hidden
-          className="gradient-mesh pointer-events-none absolute inset-0 -z-20 opacity-80"
-        />
-        <div
-          aria-hidden
-          className="grid-bg pointer-events-none absolute inset-0 -z-10 opacity-60"
-        />
-
+      <main id="main" className="bg-paper text-ink">
         <Hero />
 
-        <section id="stack" className="mx-auto max-w-6xl scroll-mt-20 px-6 pt-12 pb-24 sm:pt-20">
-          <header className="mb-10 max-w-2xl">
-            <p className="text-foreground/60 mb-3 font-mono text-xs tracking-widest uppercase">
-              The stack
-            </p>
-            <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Pinned to the absolute latest of everything.
-            </h2>
-            <p className="text-foreground/70 mt-4 text-pretty">
-              No betas, no canaries, no &ldquo;coming soon&rdquo; placeholders — every dependency
-              below is the freshest stable release on npm at build time.
-            </p>
-          </header>
-          <StackGrid />
+        <section id="method" aria-labelledby="method-heading" className="scroll-mt-24">
+          <div className="max-w-content mx-auto px-6 py-20 md:px-12 md:py-32 lg:px-24">
+            <header className="max-w-reading mb-16">
+              <p className="eyebrow mb-6">The method, made visible</p>
+              <h2
+                id="method-heading"
+                className="text-ink md:text-display-2 font-serif text-[2rem] leading-[1.1] font-light tracking-[-0.01em] text-balance"
+              >
+                Purpose. Sight. Design. Practice.
+              </h2>
+              <p className="text-body-large text-meridian mt-8 text-pretty">
+                The sequence is the practice's signature. We do not redesign a structure we cannot
+                explain the purpose of, and we do not design what we have not yet observed.
+              </p>
+            </header>
+            <MethodGrid />
+          </div>
         </section>
 
-        <section id="live" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-24">
-          <header className="mb-10 max-w-2xl">
-            <p className="text-foreground/60 mb-3 font-mono text-xs tracking-widest uppercase">
-              React 19 · Streaming
-            </p>
-            <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Server-rendered, streamed in with Suspense.
-            </h2>
-            <p className="text-foreground/70 mt-4 text-pretty">
-              The card below is an async React Server Component. The shell renders instantly; the
-              data streams in over the same response.
-            </p>
-          </header>
-          <Suspense fallback={<LiveStatsSkeleton />}>
-            <LiveStats />
-          </Suspense>
+        <section
+          id="work"
+          aria-labelledby="work-heading"
+          className="border-rule bg-paper-light border-t"
+        >
+          <div className="max-w-content mx-auto px-6 py-20 md:px-12 md:py-32 lg:px-24">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-4">
+                <p className="eyebrow">The work</p>
+              </div>
+              <div className="reading-column lg:col-span-8">
+                <h2
+                  id="work-heading"
+                  className="text-heading-1 text-ink md:text-display-2 font-serif leading-tight font-light tracking-[-0.01em] text-balance"
+                >
+                  We design target operating models for the largest enterprises in the world.
+                </h2>
+                <p className="lead text-meridian mt-10">
+                  We begin with purpose. We do not design what we have not yet understood.
+                </p>
+                <p className="text-body-large text-meridian mt-6 text-pretty">
+                  Sight is a discipline. Most operating model failures are visible months before
+                  they become expensive. Looking carefully is the cheapest intervention an
+                  organisation can buy.
+                </p>
+                <p className="text-body-large text-meridian mt-6 text-pretty">
+                  Every engagement closes with a single document. We call it A Clear View. It states
+                  what we saw, what we changed, and what the organisation now believes about itself.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <section id="action" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-24">
-          <header className="mb-10 max-w-2xl">
-            <p className="text-foreground/60 mb-3 font-mono text-xs tracking-widest uppercase">
-              Server Actions
-            </p>
-            <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Form submission, no API route in sight.
-            </h2>
-            <p className="text-foreground/70 mt-4 text-pretty">
-              Powered by <code className="font-mono text-sm">useActionState</code>, validated on the
-              server with Zod, and rendered progressively from the server.
-            </p>
-          </header>
-          <Pingback />
+        <section id="founder" aria-labelledby="founder-heading" className="border-rule border-t">
+          <div className="max-w-content mx-auto px-6 py-20 md:px-12 md:py-32 lg:px-24">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-4">
+                <p className="eyebrow">The founder</p>
+              </div>
+              <div className="reading-column lg:col-span-8">
+                <h2
+                  id="founder-heading"
+                  className="text-heading-1 text-ink md:text-heading-1 font-serif leading-tight font-light tracking-[-0.01em] text-balance"
+                >
+                  Darren built this practice on a single conviction.
+                </h2>
+                <p className="text-body-large text-meridian mt-8 text-pretty">
+                  Structure should answer to purpose, never the other way round. Every engagement
+                  begins with that conversation.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <section id="optimistic" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32">
-          <header className="mb-10 max-w-2xl">
-            <p className="text-foreground/60 mb-3 font-mono text-xs tracking-widest uppercase">
-              React 19 · useOptimistic
-            </p>
-            <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-              Instant UI, eventually consistent.
-            </h2>
-            <p className="text-foreground/70 mt-4 text-pretty">
-              Click the heart — the count updates immediately while the Server Action runs in the
-              background. If the request fails, React rolls the optimistic value back automatically.
-            </p>
-          </header>
-          <Suspense fallback={<LikeIslandSkeleton />}>
-            <LikeIsland />
-          </Suspense>
+        <section
+          id="contact"
+          aria-labelledby="contact-heading"
+          className="border-rule scroll-mt-24 border-t"
+        >
+          <div className="max-w-content mx-auto px-6 py-20 md:px-12 md:py-32 lg:px-24">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+              <header className="lg:col-span-5">
+                <p className="eyebrow mb-6">Begin a conversation</p>
+                <h2
+                  id="contact-heading"
+                  className="text-ink md:text-display-2 font-serif text-[2rem] leading-[1.1] font-light tracking-[-0.01em] text-balance"
+                >
+                  Send a note. We read every one.
+                </h2>
+                <p className="text-body-large text-meridian mt-8 text-pretty">
+                  Tell us a little about what you are looking at. We will reply from a person, not a
+                  queue.
+                </p>
+              </header>
+              <div className="lg:col-span-7">
+                <Pingback />
+              </div>
+            </div>
+          </div>
         </section>
       </main>
 
