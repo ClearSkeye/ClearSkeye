@@ -117,11 +117,35 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: "1"
 
+  # End-to-end tests run as a parallel matrix, one runner per
+  # browser engine. This is the single largest performance lever
+  # in this workflow, in combination with letting Playwright
+  # saturate every available CPU core inside each runner (the
+  # `workers: 1` cap in playwright.config.ts has been removed).
+  #
+  # To opt the e2e jobs onto a larger runner (e.g.
+  # `ubuntu-latest-8-core`), change the `runs-on` value below.
+  # Larger runners are billed minutes against the org's plan but
+  # multiply the in-shard parallelism with no other code changes.
   e2e:
-    name: Playwright
-    needs: build
+    name: Playwright (${{ matrix.browser }})
+    # Run in parallel with `build`. If the build fails, e2e will
+    # also fail (it runs `pnpm build && pnpm start` itself), but
+    # we don't want to wait for `build` before starting.
+    needs: [lint, typecheck, unit]
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
+    strategy:
+      # One browser failing should not cancel the others; we want
+      # the full picture across engines on every CI run.
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      # The matrix shard tells Playwright which engine to launch.
+      # See playwright.config.ts for the parsing rules.
+      PLAYWRIGHT_BROWSERS: ${{ matrix.browser }}
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v5
@@ -132,21 +156,43 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Cache Playwright browsers
+
+      # Cache only the browser this shard runs. A per-browser key
+      # means a Playwright bump that only affects, say, webkit
+      # does not invalidate chromium and firefox restores.
+      - name: Cache Playwright browsers (${{ matrix.browser }})
+        id: playwright-cache
         uses: actions/cache@v5
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-playwright-${{ matrix.browser }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-
-      - run: pnpm exec playwright install --with-deps
-      - run: pnpm test:e2e
-        env:
-          NEXT_TELEMETRY_DISABLED: "1"
-      - uses: actions/upload-artifact@v5
+            ${{ runner.os }}-playwright-${{ matrix.browser }}-
+
+      # Install only this shard's browser. `--with-deps` brings in
+      # the apt packages Playwright needs on ubuntu; this step is
+      # required even on a cache hit because system deps live in
+      # the runner image, not in the cached browser directory.
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run Playwright
+        run: pnpm test:e2e
+
+      - name: Upload Playwright report
         if: always()
+        uses: actions/upload-artifact@v5
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.browser }}
           path: playwright-report
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload traces and videos on failure
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: playwright-results-${{ matrix.browser }}
+          path: .playwright/results
           if-no-files-found: ignore
           retention-days: 14
