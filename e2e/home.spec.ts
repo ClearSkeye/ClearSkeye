@@ -1,34 +1,56 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Home page", () => {
-  test("renders the hero, stack grid, and footer", async ({ page }) => {
+  test("opens with the conviction in the hero", async ({ page }) => {
     await page.goto("/");
 
     await expect(page).toHaveTitle(/ClearSkeye/);
 
-    await expect(page.getByRole("heading", { level: 1, name: /shipped to/i })).toBeVisible();
-
+    // The brand-approved homepage opener. The h1 carries the
+    // conviction sentence; we match the second beat of it so that
+    // the assertion is robust to wrapping or punctuation tweaks.
     await expect(
-      page.getByRole("heading", { level: 2, name: /Pinned to the absolute latest/i }),
+      page.getByRole("heading", { level: 1, name: /ClearSkeye reverses the order/i }),
+    ).toBeVisible();
+  });
+
+  test("names the four word method", async ({ page }) => {
+    await page.goto("/");
+
+    // Purpose. Sight. Design. Practice. is the practice's signature.
+    // The homepage section heading sets it as the editorial line.
+    await expect(
+      page.getByRole("heading", { level: 2, name: /Purpose\.\s*Sight\.\s*Design\.\s*Practice\./i }),
     ).toBeVisible();
 
-    await expect(page.getByRole("contentinfo").getByText(/built with Next\.js 16/i)).toBeVisible();
+    for (const step of ["Purpose.", "Sight.", "Design.", "Practice."] as const) {
+      await expect(page.getByRole("heading", { level: 3, name: step })).toBeVisible();
+    }
   });
 
-  test("the streamed Suspense card eventually renders", async ({ page }) => {
+  test("the footer carries the tagline and method line", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByText(/Rendered at \(UTC\)/i, { exact: false })).toBeVisible({
-      timeout: 10_000,
-    });
+
+    const footer = page.getByRole("contentinfo");
+    await expect(footer.getByText("Sight before design.")).toBeVisible();
+    await expect(footer.getByText("Purpose. Sight. Design. Practice.")).toBeVisible();
   });
 
-  test("the like button optimistically increments", async ({ page }) => {
+  test("the contact form echoes a submitted note", async ({ page }) => {
     await page.goto("/");
-    const like = page.getByRole("button", { name: /^Like —/i });
-    await expect(like).toBeVisible();
-    const before = Number(await like.locator("span.font-mono").innerText());
-    await like.click();
-    await expect(like.locator("span.font-mono")).toHaveText(String(before + 1));
+
+    const message = page.getByLabel("Your note");
+    await expect(message).toBeVisible();
+    await message.fill("hello from the test runner");
+
+    await page.getByRole("button", { name: /^Send the note$/i }).click();
+
+    // The ping server action echoes the trimmed message back. We
+    // assert on the affirm copy without binding to the exact
+    // millisecond timing.
+    const status = page.getByRole("status");
+    await expect(status).toContainText(/Received/i);
+    await expect(status).toContainText("hello from the test runner");
   });
 });
 

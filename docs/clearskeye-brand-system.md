@@ -130,24 +130,30 @@ Three patterns recur.
 ### Worked examples (approved as written)
 
 **Homepage opening:**
+
 > Most operating models are designed before they are understood. ClearSkeye reverses the order.
 
 **About the work:**
+
 > We design target operating models for the largest enterprises in the world. We begin with purpose. We do not design what we have not yet understood.
 
 **About the founder:**
+
 > Darren built this practice on a single conviction: structure should answer to purpose, never the other way round. Every engagement begins with that conversation.
 
 **About the method:**
+
 > Sight is a discipline. Most operating model failures are visible months before they become expensive. Looking carefully is the cheapest intervention an organisation can buy.
 
 **Email signature:**
+
 > Darren Surname
 > ClearSkeye
 > Sight before design.
 > clearskeye.com
 
 **Proposal cover:**
+
 > A proposal for [Client name]
 > Prepared by ClearSkeye
 > Purpose. Sight. Design. Practice.
@@ -168,12 +174,14 @@ The ClearSkeye logo is a wordmark. The name is set in the brand display serif at
 **Minimum size.** Never smaller than 18 millimetres wide in print, or 96 pixels wide on screen.
 
 **Permitted colour applications:**
+
 - Ink on Paper (default).
 - Ink on White (acceptable for documents and digital surfaces where Paper is unavailable).
 - Paper on Ink (inverted, for dark covers and full bleed photography).
 - Ink with the sightline descender in Horizon. Reserved for the cover of A Clear View, the firm's annual review, and the homepage hero only.
 
 **Misuse:**
+
 - Do not stretch, condense, rotate, skew, or outline the wordmark.
 - Do not change the typeface or the weight.
 - Do not place the wordmark over busy imagery.
@@ -192,24 +200,24 @@ The palette is small, and the small size is part of the brand. Restraint in colo
 
 **Primary palette:**
 
-| Name | Hex | RGB | CMYK approx | Usage |
-|------|-----|-----|-------------|-------|
-| Ink | #0F1E2A | 15, 30, 42 | 82 / 64 / 47 / 78 | Type, ink illustration, dark backgrounds |
-| Meridian | #1E3340 | 30, 51, 64 | 72 / 50 / 38 / 56 | Secondary type, footers, depth |
-| Sightline | #6E7C85 | 110, 124, 133 | 55 / 38 / 32 / 13 | Captions, supporting type, fine rules |
-| Horizon | #C9A35B | 201, 163, 91 | 20 / 35 / 75 / 10 | Single accent. Used sparingly. |
-| Paper | #F4F0E8 | 244, 240, 232 | 3 / 4 / 8 / 0 | Primary surface |
-| Paper Light | #FAF8F2 | 250, 248, 242 | 2 / 2 / 5 / 0 | Cards, sections |
-| Rule | #D8D2C4 | 216, 210, 196 | 14 / 13 / 21 / 1 | Hairline rules, dividers |
-| White | #FFFFFF | 255, 255, 255 | 0 / 0 / 0 / 0 | Document interiors only |
+| Name        | Hex     | RGB           | CMYK approx       | Usage                                    |
+| ----------- | ------- | ------------- | ----------------- | ---------------------------------------- |
+| Ink         | #0F1E2A | 15, 30, 42    | 82 / 64 / 47 / 78 | Type, ink illustration, dark backgrounds |
+| Meridian    | #1E3340 | 30, 51, 64    | 72 / 50 / 38 / 56 | Secondary type, footers, depth           |
+| Sightline   | #6E7C85 | 110, 124, 133 | 55 / 38 / 32 / 13 | Captions, supporting type, fine rules    |
+| Horizon     | #C9A35B | 201, 163, 91  | 20 / 35 / 75 / 10 | Single accent. Used sparingly.           |
+| Paper       | #F4F0E8 | 244, 240, 232 | 3 / 4 / 8 / 0     | Primary surface                          |
+| Paper Light | #FAF8F2 | 250, 248, 242 | 2 / 2 / 5 / 0     | Cards, sections                          |
+| Rule        | #D8D2C4 | 216, 210, 196 | 14 / 13 / 21 / 1  | Hairline rules, dividers                 |
+| White       | #FFFFFF | 255, 255, 255 | 0 / 0 / 0 / 0     | Document interiors only                  |
 
 **Functional colours (digital only):**
 
-| Name | Hex | Use |
-|------|-----|-----|
-| Affirm | #4F7A5F | Success states |
+| Name    | Hex     | Use            |
+| ------- | ------- | -------------- |
+| Affirm  | #4F7A5F | Success states |
 | Caution | #B8924A | Warning states |
-| Halt | #8B3A3A | Error states |
+| Halt    | #8B3A3A | Error states   |
 
 **Accessibility.** All copy must meet a 4.5 to 1 contrast ratio against its background. Large type (24 pixels and above) must meet 3 to 1. Pre-cleared combinations:
 
@@ -227,28 +235,31 @@ The palette is small, and the small size is part of the brand. Restraint in colo
 - **Text sans serif:** Söhne. Body, navigation, captions, forms, all interface type. Weights: Buch (regular), Kräftig (semibold), Halbfett (bold) for the rare case where bold is justified.
 
 **Open source alternatives** (calibrated stand-ins, used on rapid prototypes and platforms that cannot embed the licensed fonts):
+
 - Display alternative: Spectral, weights 300 and 400 (Google Fonts).
 - Text alternative: Inter, weights 400 and 500 (Google Fonts).
 
 **Word-safe stand-ins** (internal Word documents only):
+
 - Display: Georgia.
 - Text: Calibri.
 
 **Type scale:**
 
-| Token | Size (px / rem) | Line height | Use |
-|-------|-----------------|-------------|-----|
-| display-1 | 64 / 4.0 | 1.05 | Hero pages only |
-| display-2 | 48 / 3.0 | 1.10 | Section opens, covers |
-| heading-1 | 36 / 2.25 | 1.15 | Page titles |
-| heading-2 | 28 / 1.75 | 1.20 | Major sections |
-| heading-3 | 22 / 1.375 | 1.30 | Subsections |
-| body-large | 18 / 1.125 | 1.60 | Lead paragraphs, important body |
-| body | 16 / 1.0 | 1.65 | Default body text |
-| small | 14 / 0.875 | 1.55 | Captions, footnotes, fine print |
-| mono | 14 / 0.875 | 1.55 | Code, technical specifications |
+| Token      | Size (px / rem) | Line height | Use                             |
+| ---------- | --------------- | ----------- | ------------------------------- |
+| display-1  | 64 / 4.0        | 1.05        | Hero pages only                 |
+| display-2  | 48 / 3.0        | 1.10        | Section opens, covers           |
+| heading-1  | 36 / 2.25       | 1.15        | Page titles                     |
+| heading-2  | 28 / 1.75       | 1.20        | Major sections                  |
+| heading-3  | 22 / 1.375      | 1.30        | Subsections                     |
+| body-large | 18 / 1.125      | 1.60        | Lead paragraphs, important body |
+| body       | 16 / 1.0        | 1.65        | Default body text               |
+| small      | 14 / 0.875      | 1.55        | Captions, footnotes, fine print |
+| mono       | 14 / 0.875      | 1.55        | Code, technical specifications  |
 
 **Setting rules:**
+
 - Display sizes set in Tiempos Headline Light. Headings 1 to 3 set in Regular.
 - Body, navigation, captions and interface type set in Söhne Buch.
 - Letter spacing on display sizes reduced 1 to 2 percent. Letter spacing on small caps and eyebrows increased 8 to 12 percent.
@@ -272,6 +283,7 @@ White space is a primary brand asset. Pages should feel under-filled by industry
 **Permitted: long form portrait.** Portraits of named individuals at the firm or named clients. Neutral grounds. Considered, slightly low key lighting. The subject looks at the camera or at a thoughtful middle distance. No power-pose framing. No conference room backgrounds.
 
 **Forbidden:**
+
 - Stock photography of any kind.
 - Boardroom scenes, handshake images, generic office life.
 - People pointing at screens, charts on glass walls, sticky notes on whiteboards.
@@ -319,18 +331,21 @@ Five recurring formats. Each has a master template held in the asset library.
 ### Component patterns
 
 **Buttons and links:**
+
 - Primary action: Söhne Kräftig, Paper on Ink, 24 pixel vertical padding, 32 pixel horizontal padding, 4 pixel corner radius. One per page.
 - Secondary action: Söhne Buch in Ink, with a 1 pixel Ink underline. No background, no border.
 - Inline link: Ink with a 1 pixel underline, offset 4 pixels below the baseline.
 - Hover: underline thickens to 2 pixels. No colour change. No motion beyond the underline.
 
 **Forms:**
+
 - Single column. One field per row.
 - Labels above fields, Söhne Buch small size, Sightline.
 - Field borders 1 pixel in Rule colour. On focus, border becomes Ink at 2 pixels. No coloured glow.
 - Errors set in Halt, with the explanation as a full sentence below the field.
 
 **Cards and sections:**
+
 - Cards have no shadow by default. Boundary is a hairline rule in Rule colour.
 - Section breaks are achieved with white space, not with background colour blocks.
 - Where a coloured block is necessary, Paper Light or Meridian. Never Horizon for full sections.
@@ -541,6 +556,6 @@ Where this document is silent, the conviction decides. Where the conviction is s
 
 ---
 
-*Sight before design.*
+_Sight before design._
 
-*Purpose. Sight. Design. Practice.*
+_Purpose. Sight. Design. Practice._
