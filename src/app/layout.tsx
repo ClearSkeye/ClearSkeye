@@ -8,12 +8,32 @@ import { SkipLink } from "@/components/skip-link";
 
 import "./globals.css";
 
+/* Font loading is performance-critical: the brand commits to a
+ * site that loads in under two seconds on a 4G connection.
+ *
+ * Spectral is loaded at weight 300 only (the brand sets all
+ * display type at light) and with `display: optional`. Optional
+ * lets the browser render the headline in a metric-adjusted
+ * fallback when the woff2 has not arrived inside the 100ms block
+ * window: there is no font swap and therefore no LCP penalty for
+ * first-time visitors on a 4G connection. Returning visitors hit
+ * the cached font and see Spectral immediately. We never load
+ * weight 400 or italic; the homepage and brand voice never use
+ * them.
+ *
+ * Inter is the body face. We load the three weights actually
+ * used on the page (regular, medium, semibold) with the standard
+ * `swap` policy because body type is less LCP-sensitive and the
+ * brand prefers the loaded face whenever it is available.
+ *
+ * `next/font/google` adjusts the fallback font's metrics so the
+ * swap (when one happens) is layout-neutral. */
 const spectral = Spectral({
   subsets: ["latin"],
-  weight: ["300", "400"],
-  style: ["normal", "italic"],
+  weight: ["300"],
   variable: "--font-spectral",
-  display: "swap",
+  display: "optional",
+  preload: true,
 });
 
 const inter = Inter({
@@ -21,6 +41,7 @@ const inter = Inter({
   weight: ["400", "500", "600"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
 });
 
 const siteUrl = env.NEXT_PUBLIC_SITE_URL;

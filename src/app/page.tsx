@@ -1,4 +1,5 @@
 import { Hero } from "@/components/hero";
+import { HorizonBreak } from "@/components/horizon-break";
 import { MethodGrid } from "@/components/method-grid";
 import { Pingback } from "@/components/pingback";
 import { Footer } from "@/components/footer";
@@ -74,6 +75,12 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* A single full-bleed long horizon image as a section break.
+            The brand permits this once on the homepage and it sits
+            between the work and the founder so the reader can take
+            a breath before meeting Darren. */}
+        <HorizonBreak />
 
         <section id="founder" aria-labelledby="founder-heading" className="border-rule border-t">
           <div className="max-w-content mx-auto px-6 py-16 md:px-12 md:py-24 lg:px-24 lg:py-32">

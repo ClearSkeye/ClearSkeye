@@ -1,5 +1,11 @@
 import type { SVGProps } from "react";
 
+/* The wordmark is rendered from outlined glyphs of Spectral Light
+   (the open source stand-in for Tiempos Headline Light) generated
+   at build time by `scripts/generate-wordmark.mjs`. See the
+   <Wordmark /> component below. */
+import wordmarkData from "./wordmark.generated.json";
+
 /* ============================================================
    ClearSkeye iconography.
    Line icons only. One stroke unit thickness. Square caps.
@@ -77,11 +83,37 @@ export function GitHubIcon(props: IconProps) {
   );
 }
 
+/* The wordmark renders outlined glyph paths (see `wordmarkData`
+   imported at the top of this file). Outlining means the logo
+   paints identically in every browser and breakpoint, the page
+   does not depend on the Spectral webfont having loaded for the
+   logo to be correct, and the Y descender lines up to the actual
+   stroke of the y glyph rather than to a CSS guess.
+
+   Re-run `pnpm gen:wordmark` whenever the brand changes the
+   wordmark text, the display serif, or the sightline rules. */
+
+type WordmarkSize = "small" | "default" | "large";
+
+// The on-screen cap height for each wordmark size, expressed in
+// rem. We size the SVG by cap height, not em height, because cap
+// height is what the eye reads as "the size of the wordmark". The
+// descender (when present) extends below the cap area without
+// changing the perceived size. These values match the perceived
+// optical size of the previous CSS-text wordmark at Spectral 1.25 /
+// 1.75 / 2.25 rem (cap-to-em ratio in Spectral is ≈ 0.66).
+const CAP_HEIGHT_REM: Record<WordmarkSize, number> = {
+  small: 0.825,
+  default: 1.155,
+  large: 1.485,
+};
+
 /**
- * The wordmark. The firm name set in the display serif at light
- * weight. The Y descender in Skeye is the brand's sightline; on
- * the homepage hero (and the cover of A Clear View) it is set in
- * Horizon, otherwise in the colour the parent provides.
+ * The wordmark. The firm name outlined from the display serif. On
+ * the homepage hero (and on the cover of A Clear View) the Y in
+ * Skeye carries the brand's sightline: a vertical descender in
+ * Horizon, one stroke unit thick, dropping by one cap height. Pass
+ * `withSightline` only in those premium contexts.
  *
  * For tight squares (favicon, social) use SightlineMark instead.
  */
@@ -91,38 +123,67 @@ export function Wordmark({
   withSightline = false,
 }: {
   className?: string;
-  size?: "small" | "default" | "large";
+  size?: WordmarkSize;
   withSightline?: boolean;
 }) {
-  const fontSize = size === "small" ? "1.25rem" : size === "large" ? "2.25rem" : "1.75rem";
+  const { pathData, viewBoxBody, viewBoxFull, capHeight, descender, width } = wordmarkData;
+  const capRem = CAP_HEIGHT_REM[size];
+  const viewBox = withSightline ? viewBoxFull : viewBoxBody;
+  // Height in rem for the rendered SVG: cap height drives perceived
+  // size; we scale the viewBox height back into rem accordingly.
+  const heightUnits = withSightline ? capHeight + descender.yEnd : capHeight;
+  const heightRem = (capRem * heightUnits) / capHeight;
+  const widthRem = (capRem * width) / capHeight;
+
+  // When the sightline is on we crop the wordmark to the area above
+  // the baseline. That removes the lowercase y's natural descender
+  // (the small curl) so the only thing reading as a descender is
+  // the brand sightline, which then drops cleanly from the apex of
+  // the y. When the sightline is off we render the full wordmark
+  // including the natural y tail and have no descender area below.
+  const clipId = "wordmark-above-baseline";
+
   return (
     <span
-      className={`relative inline-block font-serif leading-none font-light tracking-tight ${
-        className ?? ""
-      }`}
-      style={{ fontSize }}
+      className={`inline-block leading-none ${className ?? ""}`}
+      style={{ width: `${widthRem.toFixed(3)}rem` }}
     >
-      <span aria-hidden>ClearSkeye</span>
-      <span className="sr-only">ClearSkeye</span>
-      {withSightline ? (
-        <span
-          aria-hidden
-          /*
-           * The descender is one stroke unit thick, square capped,
-           * and drops by approximately one cap height from the
-           * baseline. It is positioned under the Y in Skeye, which
-           * sits at roughly 84 percent of the wordmark's optical
-           * width in Spectral 300.
-           */
-          className="bg-horizon absolute"
-          style={{
-            left: "84%",
-            top: "0.78em",
-            width: "2px",
-            height: "0.85em",
-          }}
-        />
-      ) : null}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={viewBox}
+        role="img"
+        aria-label="ClearSkeye"
+        focusable="false"
+        style={{ width: "100%", height: `${heightRem.toFixed(3)}rem`, display: "block" }}
+      >
+        {withSightline ? (
+          <>
+            <defs>
+              <clipPath id={clipId}>
+                {/* Cover everything above the baseline (y ≤ 0) so the
+                    lowercase y's natural curled tail is hidden. The
+                    rect is generously oversized so it never clips a
+                    cap-top regardless of viewport. */}
+                <rect x={-2000} y={-4000} width={width + 4000} height={4000} />
+              </clipPath>
+            </defs>
+            <g clipPath={`url(#${clipId})`}>
+              <path d={pathData} fill="currentColor" />
+            </g>
+            <line
+              x1={descender.x}
+              y1={descender.yStart}
+              x2={descender.x}
+              y2={descender.yEnd}
+              stroke="var(--color-horizon)"
+              strokeWidth={descender.strokeWidth}
+              strokeLinecap="square"
+            />
+          </>
+        ) : (
+          <path d={pathData} fill="currentColor" />
+        )}
+      </svg>
     </span>
   );
 }

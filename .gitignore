@@ -40,6 +40,11 @@ yarn-error.log*
 /playwright-report
 /test-results
 /coverage
+/.lighthouseci
+
+# generator caches (the wordmark generator downloads Spectral on
+# first run; the binary is not vendored under OFL)
+/scripts/fonts
 
 # typescript
 *.tsbuildinfo

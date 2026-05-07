@@ -196,3 +196,58 @@ jobs:
           path: .playwright/results
           if-no-files-found: ignore
           retention-days: 14
+
+  # Lighthouse / Web Vitals gate.
+  #
+  # Honours the brand's commitment: "Performance is part of the
+  # brand. Site loads in under two seconds on a 4G connection."
+  #
+  # The job builds the production app, runs Lighthouse three
+  # times against `pnpm start` under the mobile preset (Slow 4G,
+  # 4x CPU slowdown), and asserts the budgets defined in
+  # `lighthouserc.cjs`. CI fails on any "error" assertion. The
+  # HTML reports for every run are uploaded as an artifact for
+  # inspection, regardless of whether the job passed.
+  #
+  # This job does not need the build job because it builds the
+  # app itself (matching the e2e job's pattern).
+  lighthouse:
+    name: Lighthouse
+    needs: [lint, typecheck, unit]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v5
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # Lighthouse needs a real Chrome. The runner image already
+      # ships Chrome (`/usr/bin/google-chrome-stable`) but we use
+      # a setup action so the version is explicit and pinned.
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Build
+        run: pnpm build
+
+      - name: Run Lighthouse
+        run: pnpm exec lhci autorun
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: lighthouse-report
+          path: .lighthouseci
+          if-no-files-found: ignore
+          retention-days: 14
