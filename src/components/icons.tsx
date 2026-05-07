@@ -79,26 +79,50 @@ export function GitHubIcon(props: IconProps) {
 
 /**
  * The wordmark. The firm name set in the display serif at light
- * weight, with a single graphical descender on the Y. Use this
- * wherever the wordmark fits. For tight squares use SightlineMark.
+ * weight. The Y descender in Skeye is the brand's sightline; on
+ * the homepage hero (and the cover of A Clear View) it is set in
+ * Horizon, otherwise in the colour the parent provides.
+ *
+ * For tight squares (favicon, social) use SightlineMark instead.
  */
 export function Wordmark({
   className,
   size = "default",
+  withSightline = false,
 }: {
   className?: string;
-  size?: "default" | "small";
+  size?: "small" | "default" | "large";
+  withSightline?: boolean;
 }) {
-  const fontSize = size === "small" ? "1.25rem" : "1.75rem";
+  const fontSize = size === "small" ? "1.25rem" : size === "large" ? "2.25rem" : "1.75rem";
   return (
     <span
-      className={`relative inline-flex items-baseline font-serif leading-none font-light tracking-tight ${
+      className={`relative inline-block font-serif leading-none font-light tracking-tight ${
         className ?? ""
       }`}
       style={{ fontSize }}
     >
       <span aria-hidden>ClearSkeye</span>
       <span className="sr-only">ClearSkeye</span>
+      {withSightline ? (
+        <span
+          aria-hidden
+          /*
+           * The descender is one stroke unit thick, square capped,
+           * and drops by approximately one cap height from the
+           * baseline. It is positioned under the Y in Skeye, which
+           * sits at roughly 84 percent of the wordmark's optical
+           * width in Spectral 300.
+           */
+          className="bg-horizon absolute"
+          style={{
+            left: "84%",
+            top: "0.78em",
+            width: "2px",
+            height: "0.85em",
+          }}
+        />
+      ) : null}
     </span>
   );
 }

@@ -7,21 +7,21 @@ const COPYRIGHT_YEAR = 2026;
 export function Footer() {
   return (
     <footer className="bg-ink text-paper">
-      <div className="max-w-content mx-auto px-6 py-16 md:px-12 md:py-20 lg:px-24">
+      <div className="max-w-content mx-auto px-6 py-16 md:px-12 md:py-24 lg:px-24">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <Wordmark className="text-paper" />
             <p className="text-heading-3 text-paper mt-6 font-serif leading-snug font-light">
               Sight before design.
             </p>
-            <p className="text-small text-paper/70 mt-3 tracking-[0.1em] uppercase">
+            <p className="text-small text-paper/70 mt-4 tracking-[0.1em] uppercase">
               Purpose. Sight. Design. Practice.
             </p>
           </div>
 
           <nav
             aria-label="Footer"
-            className="text-body grid grid-cols-2 gap-x-12 gap-y-3 lg:col-span-4"
+            className="text-body grid grid-cols-2 gap-x-12 gap-y-4 lg:col-span-4"
           >
             <Link
               href="#method"

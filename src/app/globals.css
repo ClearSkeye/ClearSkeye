@@ -173,8 +173,12 @@
     letter-spacing: 0;
   }
 
+  /*
+   * Brand reading width is 65 to 75 characters per line. We sit at
+   * 68 for comfortable English line lengths in body-large.
+   */
   .reading-column {
-    max-width: 65ch;
+    max-width: 68ch;
   }
 
   .rule {
